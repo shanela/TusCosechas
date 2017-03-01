@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Tus Cosechas</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/styles.css" type="text/css" media="all"/>
+    </h:head>
+    <h:body>
+        <f:view>
+            <header>
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <a href="#" class="brand"><img src="images/logo.png" width="120" height="40" alt="Logo" /></a>                         
+                        </div>
+
+                        <!--MENU CLIENTE realiza pedidos-->
+                        <p:menubar>
+                            <p:menuitem value="Nuevo Pedido" outcome=""/>
+                            <p:menuitem value="Ver Pedidos Realizados" outcome=""/>                    
+                            <p:menuitem value="Ver Facturas" outcome="/faces/views/facturasCli"/>
+                        </p:menubar>
+
+
+                        <!--MENU GERENTE crud de todo-->
+                        <p:menubar>
+                            <p:menuitem value="Empleados" outcome=""/>
+                            <p:menuitem value="Lotes" outcome=""/>                    
+                            <p:menuitem value="Transportes" outcome="/faces/views/facturasCli"/>
+                            <p:menuitem value="Vegetales" outcome=""/>    
+                        </p:menubar>
+                        
+                        <!--MENU CONDUCTOR Cambia el estado del pedido (en camino u entregado) -->
+                        <p:menubar>
+                            <p:menuitem value="Pedidos" outcome=""/>                              
+                        </p:menubar>
+                        <nav name="menuConductor"> 
+                            <ul>
+                                <li><h:link value="Pedidos" outcome="about?faces-redirect=true" /></li>
+                            </ul>
+                        </nav>
+
+                        <!--MENU BODEGUERO: agrega vegetales en bodega -->
+                        <nav name="menuBodeguero"> 
+                            <ul>
+                                <li><h:link value="Administracion de Bodegas" outcome="about?faces-redirect=true" /></li>
+                            </ul>
+                        </nav>
+
+                        <!--MENU VENDEDOR -->
+                        <nav name="menuVendedor"> 
+                            <ul>
+                                <li><h:link value="Pedidos por Aprobar" outcome="about?faces-redirect=true" /></li>
+                                <li><h:link value="Generar Factura" outcome="about?faces-redirect=true" /></li>
+                            </ul>
+
+
+                            <aside>
+                                <ui:insert name="nav-user">
+                                    <ui:include src="/WEB-INF/includes/layout/nav-user.xhtml" />
+                                </ui:insert>
+                            </aside>
+
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <main>
+
+                <ui:insert name="contenido" />
+
+
+            </main>
+            <footer>
+                <div class="footer">
+                    <p>© 2017, TusCosechas</p>
+                </div>
+            </footer>
+        </f:view>
+    </h:body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+   
+    
+    <ui:define name="contenido">
+    <h:form>
+        <p:panel id="loginPnl" header="Inicio de Sesión" style="width: 400px;margin:0px auto;">    
+        <p:panelGrid columns="2" style="width: 100%;" >
+              <p:outputLabel for="usuario" value="Usuario:" />
+              <p:inputText id="usuario" value="#{logInBean.username}"  maxlength="20" required="true" requiredMessage="Usuario es requerido."/>                        
+              <p:outputLabel for="pwd" value="Contraseña:"/>
+              <p:password id="pwd" value="#{logInBean.password}" maxlength="20" required="true" requiredMessage="La Clave es requerida."/>                                  
+           </p:panelGrid>
+         
+          <p:panelGrid columns="1" style="width: 100%;" >
+                   <p:messages for="usuario, pwd"  severity="error"/>
+                   <p:commandButton value="Aceptar" ajax="false" action="#{logInBean.login()}" update="@form" style="margin:0px auto;"/>                                   
+          </p:panelGrid>         
+     </p:panel>    
+        <p:messages  globalOnly="true" showDetail="true" severity="info, error, warning"></p:messages>
+         
+      </h:form>   
+    </ui:define>
+    
+    </ui:composition>

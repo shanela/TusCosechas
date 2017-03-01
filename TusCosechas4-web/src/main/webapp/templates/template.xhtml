@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Tus Cosechas</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/styles.css" type="text/css" media="all"/>
+    </h:head>
+    <h:body>
+        <f:view>
+            <header>
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <a href="#" class="brand"><img src="images/logo.png" width="120" height="40" alt="Logo" /></a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main>
+               <ui:insert name="contenido" />
+            </main>
+            <footer>
+                <div class="footer">
+                    <p>© 2017, TusCosechas</p>
+                </div>
+            </footer>
+        </f:view>
+    </h:body>
+</html>

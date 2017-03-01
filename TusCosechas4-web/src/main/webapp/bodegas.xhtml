@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="/templates/template.xhtml">
+    <ui:define name="contenido">
+        <h:form>
+        <p:panel header="Lista de Vegetales en Bodega">
+            <p:dataTable value="#{bodegaBean.bodegas}" var="bodega" paginator="true" paginatorPosition="bottom" selectionMode="single"
+                         selection="#{bodegaBean.bodegaSeleccionado}" rowKey="#{bodega.codigoBodega}"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                <p:ajax event="rowSelect" update="@form" />
+                <p:ajax event="rowUnselect" update="@form" />
+                <p:column headerText="Nombre del Vegetal">#{bodega.vegetal.nombre}</p:column>
+                <p:column headerText="Cantidad">#{bodega.cantidad}</p:column>
+                <p:column headerText="Fecha de Ingreso">
+                    <h:outputText value="#{bodega.fechaingreso}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Fecha de Caducidad"> 
+                    <h:outputText value="#{bodega.fechacaducidad}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/> 
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Estado">#{bodega.estado}</p:column>
+            </p:dataTable>
+            <br />
+            <center>
+                <p:commandButton value="Agregar" actionListener="#{bodegaBean.agregar()}" update="@form" disabled="#{not empty bodegaBean.bodega}" />
+                <p:commandButton value="Modificar" actionListener="#{bodegaBean.modificar()}" update="@form" rendered="#{not empty bodegaBean.bodegaSeleccionado}" disabled="#{not empty  bodegaBean.bodega}" />
+                <p:commandButton value="Eliminar" actionListener="#{bodegaBean.eliminar()}" update="@form" rendered="#{not empty bodegaBean.bodegaSeleccionado}" disabled="#{not empty bodegaBean.bodega}" />
+            </center>
+            <br />
+            <p:panel header="Ingresar/Modificar Vegetales en Bodega" rendered="#{not empty bodegaBean.bodega}">
+                <h:outputText value="Lista de Vegetales en Produccion:"/>
+                 <p:panelGrid columns="1">
+                     <p:dataTable value="#{bodegaBean.vegetales}" rendered="#{not bodegaBean.modify}" 
+                                 var="vegetalesDisponibles" 
+                                 paginator="true" 
+                                 rows="5"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                                 paginatorPosition="bottom" 
+                                 selectionMode="single" 
+                                 selection="#{bodegaBean.vegetalSeleccionado}" 
+                                 rowKey="#{vegetalesDisponibles.codigoVegetal}">
+                         <p:ajax event="rowSelect" update="@form" />
+
+                        <p:column headerText="Nombre del Vegetal">
+                            <h:outputText value="#{vegetalesDisponibles.nombre}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:panelGrid>
+                
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="vegSelex" value="Nombre del Vegetal: " />
+                    <p:outputLabel id="vegSelex" value="#{bodegaBean.bodegaSeleccionado.vegetal.nombre}"/>
+                    <p:message for="vegSelex" />
+                    
+                    <p:outputLabel for="cantidad" value="Cantidad: " />
+                    <p:inputText id="cantidad" value="#{bodegaBean.bodega.cantidad}" maxlength="75" required="true" requiredMessage="La cantidad del vegetal es requerido." />
+                    <p:message for="cantidad" />
+
+                    <p:outputLabel for="fechaingreso" value="Fecha Ingreso: " />
+                    <p:calendar id="fechaingreso" value="#{bodegaBean.bodega.fechaingreso}" pattern="dd-MM-yyyy" mask="true"  required="true" requiredMessage="La fecha de ingreso es requerida." />
+                    <p:message for="fechaingreso" />
+                              
+                    <p:outputLabel for="fechacaducidad" value="Fecha Caducidad: " />
+                    <p:calendar id="fechacaducidad" value="#{bodegaBean.bodega.fechacaducidad}" pattern="dd-MM-yyyy" mask="true"  required="true" requiredMessage="La fecha de caducidad es requerida." />
+                    <p:message for="fechacaducidad" />
+
+                    <p:outputLabel for="estado" value="Estado " />
+                    <p:inputText id="estado" value="#{bodegaBean.bodega.estado}" maxlength="10"  required="true" requiredMessage="El estado del vegetal es requerido." />
+                    <p:message for="estado" />
+
+                   
+                </p:panelGrid>
+                <br />
+                <p:commandButton value="Guardar" actionListener="#{bodegaBean.guardar()}" update="@form" />
+                <p:commandButton value="Cancelar" actionListener="#{bodegaBean.cancelar()}" update="@form" immediate="true" />
+            </p:panel>
+        </p:panel>
+            </h:form>
+    </ui:define>
+</ui:composition>

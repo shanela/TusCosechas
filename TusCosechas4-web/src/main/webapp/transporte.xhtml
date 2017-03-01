@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:define name="contenido">
+        <h:form>
+        <p:panel header="Administraci&oacute;n de transportes">
+            <p:dataTable value="#{transporteBean.transportes}" var="transporte" paginator="true" paginatorPosition="bottom" selectionMode="single"
+                         selection="#{transporteBean.transporteSeleccionado}" rowKey="#{transporte.codigoTransporte}"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                <p:ajax event="rowSelect" update="@form" />
+                <p:ajax event="rowUnselect" update="@form" />
+                <p:column headerText="Marca">#{transporte.marca}</p:column>
+                <p:column headerText="Modelo">#{transporte.modelo}</p:column>
+                <p:column headerText="A&ntilde;o">#{transporte.anio}</p:column>
+                <p:column headerText="Capacidad de carga">#{transporte.capacidadcarga}</p:column>
+                <p:column headerText="Volumen">#{transporte.volumen}</p:column>
+                <p:column headerText="Matricula">#{transporte.matricula}</p:column>
+            </p:dataTable>
+            <br />
+            <center>
+                <p:commandButton value="Agregar" actionListener="#{transporteBean.agregar()}" update="@form" disabled="#{not empty transporteBean.transporte}" />
+                <p:commandButton value="Modificar" actionListener="#{transporteBean.modificar()}" update="@form" rendered="#{not empty transporteBean.transporteSeleccionado}" disabled="#{not empty transporteBean.transporte}" />
+                <p:commandButton value="Eliminar" actionListener="#{transporteBean.eliminar()}" update="@form" rendered="#{not empty transporteBean.transporteSeleccionado}" disabled="#{not empty transporteBean.transporte}" />
+            </center>
+            <br />
+            <p:panel header="Agregar/Modificar transporte" rendered="#{not empty transporteBean.transporte}">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="marca" value="Marca: " />
+                    <p:inputText id="marca" value="#{transporteBean.transporte.marca}" maxlength="75" required="true" requiredMessage="La marca del transporte es requerida." />
+                    <p:message for="marca" />
+                    
+                    <p:outputLabel for="modelo" value="Modelo: " />
+                    <p:inputText id="modelo" value="#{transporteBean.transporte.modelo}" maxlength="75" required="true" requiredMessage="El modelo del transporte es requerido." />
+                    <p:message for="modelo" />
+                    
+                    <p:outputLabel for="anio" value="A&ntilde;o: " />
+                    <p:inputText id="anio" value="#{transporteBean.transporte.anio}" maxlength="4" type="number" required="true" requiredMessage="El a&ntilde;o del transporte es requerido." />
+                    <p:message for="anio" />
+                    
+                    <p:outputLabel for="capacidadcarga" value="Capacidad de carga: " />
+                    <p:inputText id="capacidadcarga" value="#{transporteBean.transporte.capacidadcarga}" maxlength="5" type="number" required="true" requiredMessage="La capacidad de carga del transporte es requerida." />
+                    <p:message for="capacidadcarga" />
+                    
+                    <p:outputLabel for="volumen" value="Volumen: " />
+                    <p:inputText id="volumen" value="#{transporteBean.transporte.volumen}" maxlength="5" type="number" required="true" requiredMessage="El volumen del transporte es requerido." />
+                    <p:message for="volumen" />
+                    
+                    <p:outputLabel for="matricula" value="Matricula: " />
+                    <p:inputText id="matricula" value="#{transporteBean.transporte.matricula}" maxlength="50" required="true" requiredMessage="La matricula del transporte es requerida." />
+                    <p:message for="matricula" />
+                </p:panelGrid>
+                <br />
+                <p:commandButton value="Guardar" actionListener="#{transporteBean.guardar()}" update="@form" />
+                <p:commandButton value="Cancelar" actionListener="#{transporteBean.cancelar()}" update="@form" immediate="true" />
+            </p:panel>
+        </p:panel>
+            </h:form>
+    </ui:define>
+</ui:composition>
