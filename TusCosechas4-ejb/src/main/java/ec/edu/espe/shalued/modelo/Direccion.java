@@ -19,4 +19,43 @@ public class Direccion {
     private String calleprincipal;
     private String callesecundaria;
     private String codigopostal;
+
+    public Canton getCanton() {
+        return canton;
+    }
+
+    public void setCanton(Canton canton) {
+        this.canton = canton;
+    }
+
+    public String getCalleprincipal() {
+        return calleprincipal;
+    }
+
+    public void setCalleprincipal(String calleprincipal) {
+        this.calleprincipal = calleprincipal;
+    }
+
+    public String getCallesecundaria() {
+        return callesecundaria;
+    }
+
+    public void setCallesecundaria(String callesecundaria) {
+        this.callesecundaria = callesecundaria;
+    }
+
+    public String getCodigopostal() {
+        return codigopostal;
+    }
+
+    public void setCodigopostal(String codigopostal) {
+        this.codigopostal = codigopostal;
+    }
+    
+    
+    
+    
+    
+    
+    
 }

@@ -15,7 +15,7 @@ import org.mongodb.morphia.annotations.Reference;
 @Embedded
 public class DetallePedido {
     
-    private Integer index;
+    private Integer codigoDetallePedido;
     private Integer cantidad;
     private Double subtotal;
     
@@ -25,12 +25,12 @@ public class DetallePedido {
     public DetallePedido() {
     }
 
-    public Integer getIndex() {
-        return index;
+    public Integer getCodigoDetallePedido() {
+        return codigoDetallePedido;
     }
 
-    public void setIndex(Integer index) {
-        this.index = index;
+    public void setCodigoDetallePedido(Integer codigoDetallePedido) {
+        this.codigoDetallePedido = codigoDetallePedido;
     }
 
     public Integer getCantidad() {
