@@ -14,6 +14,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
+import org.mongodb.morphia.annotations.Reference;
 
 /**
  *
@@ -28,6 +29,9 @@ public class Factura extends BaseEntity{
     private Double subtotal;
     private Double iva;
     private Double total;
+    
+    @Reference
+    private Cliente cliente;
     
     @Embedded
     private List<DetalleFactura> detalleFacturaList;
@@ -75,6 +79,15 @@ public class Factura extends BaseEntity{
         this.total = total;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    
     public List<DetalleFactura> getDetalleFacturaList() {
         return detalleFacturaList;
     }

@@ -291,6 +291,16 @@ public class PedidoBean extends BaseBean implements Serializable {
         this.bodegaSelected = bodegaSelected;
     }
 
+    public Pedido getPedidoSeleccionado() {
+        return pedidoSeleccionado;
+    }
+
+    public void setPedidoSeleccionado(Pedido pedidoSeleccionado) {
+        this.pedidoSeleccionado = pedidoSeleccionado;
+    }
+    
+    
+
     //Mensajes
     public void info(String mensaje) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, mensaje, ""));

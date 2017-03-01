@@ -11,25 +11,25 @@
             <p:panel id="loginPnl" header="Creación de Cuenta" style="width: 400px;margin:0px auto;">
                 <p:panelGrid columns="2" style="width: 100%;">
                     <p:outputLabel for="userNew" value="Usuername:"/>
-                    <p:inputText id="userNew" value="#{logInBean.register.usuNombre}" required="true"/>
+                    <p:inputText id="userNew" value="#{logInBean.register.username}" required="true"/>
 
                     <p:outputLabel for="pwdNew" value="Contraseña:"/>
-                    <p:password id="pwdNew" value="#{logInBean.register.usuContrasenia}" required="true"/>
+                    <p:password id="pwdNew" value="#{logInBean.register.password}" required="true"/>
 
                     <p:outputLabel for="nameNew" value="Nombres:"/>
-                    <p:inputText id="nameNew" value="#{logInBean.nuevoCliente.cliNombre}" required="true"/>
+                    <p:inputText id="nameNew" value="#{logInBean.nuevoCliente.nombres}" required="true"/>
 
                     <p:outputLabel for="lastNew" value="Apellidos:"/>
-                    <p:inputText id="lastNew" value="#{logInBean.nuevoCliente.cliApellidos}" required="true"/>
+                    <p:inputText id="lastNew" value="#{logInBean.nuevoCliente.apellidos}" required="true"/>
 
                     <p:outputLabel for="cedNew" value="Cedula:"/>
-                    <p:inputText id="cedNew" value="#{logInBean.nuevoCliente.cliCedula}" required="true"/>  
+                    <p:inputText id="cedNew" value="#{logInBean.nuevoCliente.cedula}" required="true"/>  
 
                     <p:outputLabel for="movNew" value="Movil:"/>
-                    <p:inputText id="movNew" value="#{logInBean.nuevoCliente.cliTelefono}" required="true"/>
+                    <p:inputText id="movNew" value="#{logInBean.nuevoCliente.telefono}" required="true"/>
 
                     <p:outputLabel for="dirNew" value="Dirección:"/>
-                    <p:inputTextarea id="dirNew" value="#{logInBean.nuevoCliente.cliDireccion}" required="true"/>
+                    <p:inputTextarea id="dirNew" value="#{logInBean.nuevoCliente.direccion}" required="true"/>
                 </p:panelGrid>
 
                 <p:panelGrid columns="1" style="width: 100%;" >
