@@ -41,13 +41,13 @@ public class PedidoServicio implements Serializable {
     private BodegaDao bodegaDao;
 
     @PostConstruct
-    public void init() {
+    public void postConstruct() {
         mp = new MongoPersistence();
-        pedidoDao = new PedidoDao(Pedido.class, mp.context());
         bodegaDao = new BodegaDao(Bodega.class, mp.context());
-        detallePedidoDao = new DetallePedidoDao(DetallePedido.class, mp.context());
+        pedidoDao = new PedidoDao(Pedido.class,mp.context());
+        detallePedidoDao = new DetallePedidoDao(DetallePedido.class,mp.context());
     }
-
+    
     public List<Pedido> obtenerPedidosEnEspera() {
         String estado = "ESPER";
         return pedidoDao.createQuery().filter("estado =", estado).asList();

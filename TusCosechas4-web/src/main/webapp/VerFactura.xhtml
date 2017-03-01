@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="contenido">
+        <h:form id="form1">
+            <p:panel header="Lista de Facturas" style="width: auto">
+                <p:dataTable value="#{facturaBean.facturas}" 
+                             style=" margin:0 auto; width: 75%" 
+                             var="factura" id="tablaFacturas"  
+                             emptyMessage="No posee Facturas Generadas"
+                             selectionMode="single"
+                             selection="#{facturaBean.facturaSelected}" 
+                              rowKey="#{factura.facCodigo}">
+                    <p:ajax event="rowSelect"  oncomplete="PF('dlg1').show();" update=":form2" />
+
+                    <p:column headerText="Id Factura">
+                        <h:outputText value="#{factura.facCodigo}"/>
+                    </p:column>
+                    <p:column headerText="Fecha Factura">
+                        <h:outputText value="#{factura.facFecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Subtotal">
+                        <h:outputText value="#{factura.facSubtotal}" style="float:right;">
+                            <f:convertNumber type="currency"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Total Factura">
+                        <h:outputText value="#{factura.facTotal}" style="float:right;">    
+                            <f:convertNumber type="currency"/>
+                        </h:outputText>
+                    </p:column>
+
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+        
+        
+        
+         <p:dialog header="Detalle Factura" widgetVar="dlg1" id="verFacDialogId" draggable="false" closable="true" width="800" >
+             <h:form id="form2">
+                <p:panel header="Detalle Factura" style="width: 90%">
+                            <p:panelGrid columns="4" >
+                                <p:outputLabel value="Nombre:"/>
+                                <h:outputText value="#{facturaBean.facturaSelected.cliCodigo.cliNombre}"></h:outputText>
+
+                                <p:outputLabel  value="Apellido:"/>
+                                <h:outputText value="#{facturaBean.facturaSelected.cliCodigo.cliApellidos}"></h:outputText>
+
+                                <p:outputLabel  value="Cedula:"/>
+                                <h:outputText value="#{facturaBean.facturaSelected.cliCodigo.cliCedula}"></h:outputText>
+
+                                <p:outputLabel  value="Dirección:"/>
+                                <h:outputText value="#{facturaBean.facturaSelected.cliCodigo.cliDireccion}"></h:outputText>
+                                
+                                <p:outputLabel  value="Fecha de Emision"/>
+                                <h:outputText value="#{facturaBean.facturaSelected.facFecha}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:panelGrid>  
+
+                            <p:panelGrid columns="4" >
+                                <p:dataTable value="#{facturaBean.facturaSelected.detalleFacturaList}" 
+                                             style=" margin:0 auto; width: 100%" 
+                                             var="detalle" id="detalle"  
+                                             emptyMessage="Se ha producido un Error" >
+
+                                    <p:column headerText="Cantidad">
+                                        <h:outputText value="#{detalle.dfaCantidad}"/>
+                                    </p:column>
+                                    <p:column headerText="Descripción">
+                                        <h:outputText value="#{detalle.dfadescripcion}"/>
+                                    </p:column>
+                                    <p:column headerText="Pre. Unitario">
+                                        <h:outputText value="#{detalle.dfaSubtotal/detalle.dfaCantidad}"/>
+                                    </p:column>
+                                    <p:column headerText="SubTotal">
+                                        <h:outputText value="#{detalle.dfaSubtotal}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panelGrid>
+                    
+                    <p:panelGrid columns="2" style="float: right">
+                         <p:outputLabel value="14% Iva: "/>
+                         <h:outputText value="#{facturaBean.facturaSelected.facIva}"></h:outputText>
+                         <p:outputLabel value="Total: "/>
+                         <h:outputText value="#{facturaBean.facturaSelected.facTotal}"></h:outputText>
+                    </p:panelGrid>
+
+                        </p:panel>
+                
+             </h:form>
+        </p:dialog>
+        
+            </ui:define>
+
+</ui:composition>
+            
+   
