@@ -8,6 +8,7 @@ package ec.edu.espe.shalued.web;
 import ec.edu.espe.shalued.modelo.Bodega;
 import ec.edu.espe.shalued.modelo.Canton;
 import ec.edu.espe.shalued.modelo.Cliente;
+import ec.edu.espe.shalued.modelo.Dao.PedidoDao;
 import ec.edu.espe.shalued.modelo.DetallePedido;
 import ec.edu.espe.shalued.modelo.Pedido;
 import ec.edu.espe.shalued.modelo.Provincia;
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 import org.apache.commons.beanutils.BeanUtils;
+import org.mongodb.morphia.query.FindOptions;
 
 /**
  *
@@ -72,6 +74,7 @@ public class PedidoBean extends BaseBean implements Serializable {
     private Integer cant = 1;
     private Long idTemp = 1L;
     private Pedido pedidoSeleccionado;
+    private PedidoDao pedidoDao;
 
     public Vegetal getVegetal() {
         return vegetal;
@@ -83,7 +86,7 @@ public class PedidoBean extends BaseBean implements Serializable {
 
     @PostConstruct
     public void postContructor() {
-        this.provincias = this.ubicacionServicio.obtenerTodasProvincias();
+ //       this.provincias = this.ubicacionServicio.obtenerTodasProvincias();
 //        this.cantones = this.ubicacionServicio.obtenerTodasCantones();
         this.pedidos = this.pedidoServicio.obtenertodoslosPedidos();
         this.bodegas = bodegaServicio.obtenerVegetalesdisponibles();
@@ -124,9 +127,7 @@ public class PedidoBean extends BaseBean implements Serializable {
             if (pedido.getDetalle()== null) {
                 pedido.setDetalle(new ArrayList<DetallePedido>());
             }
-            // bodegas.get(bodegas.indexOf(bodegaSelected)).setBodCantidad(bodegaSelected.getBodCantidad() - cant);
-//            bodegaSelected.setBodCantidad(bodegaSelected.getBodCantidad()-cant);
-            pedido.getDetalle().add(detalle);
+             pedido.getDetalle().add(detalle);
             asignacionBodegaDetalle.put(detalle, bodegaSelected);
             RequestContext.getCurrentInstance().execute("PF('dlg1').hide();");
 
@@ -139,6 +140,8 @@ public class PedidoBean extends BaseBean implements Serializable {
     public void crearPedido() {
 //        pedido.setProCodigo(provinciaSelectedId);
 //        pedido.setCanCodigo(cantonSelectedId);
+        Integer id =obtenerMaximoId()+1;
+        pedido.setCodigoPedido(id);
         pedido.setFecha(new Date());
         pedido.setCliente(credencialesBean.getClienteSesion());
 
@@ -151,6 +154,21 @@ public class PedidoBean extends BaseBean implements Serializable {
         }
         pedido = new Pedido();
     }
+    
+    
+    
+      public int obtenerMaximoId()
+    {
+       List<Pedido> pedidos = pedidoDao.createQuery().order("-codigoPedido").asList(new FindOptions().limit(1));
+       
+       if ((pedidos == null) || (pedidos.isEmpty()))
+       {
+           return 0;
+       }
+       
+        return pedidos.get(0).getCodigoPedido();
+    }
+    
 
     public String cambioEtiquetaEstadoPedido2(String estadoPedido) {
         if ("APROB".equals(estadoPedido)) {

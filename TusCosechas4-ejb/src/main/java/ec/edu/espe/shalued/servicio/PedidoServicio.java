@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import org.mongodb.morphia.query.Query;
@@ -39,6 +40,14 @@ public class PedidoServicio implements Serializable {
     private DetallePedidoDao detallePedidoDao;
     private BodegaDao bodegaDao;
 
+    @PostConstruct
+    public void postConstruct() {
+        mp = new MongoPersistence();
+        bodegaDao = new BodegaDao(Bodega.class, mp.context());
+        pedidoDao = new PedidoDao(Pedido.class,mp.context());
+        detallePedidoDao = new DetallePedidoDao(DetallePedido.class,mp.context());
+    }
+    
     public List<Pedido> obtenerPedidosEnEspera() {
         String estado = "ESPER";
         return pedidoDao.createQuery().filter("estado =", estado).asList();
