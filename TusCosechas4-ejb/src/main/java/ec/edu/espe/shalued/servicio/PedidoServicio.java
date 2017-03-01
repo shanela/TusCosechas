@@ -44,10 +44,10 @@ public class PedidoServicio implements Serializable {
     public void postConstruct() {
         mp = new MongoPersistence();
         bodegaDao = new BodegaDao(Bodega.class, mp.context());
-        pedidoDao = new PedidoDao(Pedido.class,mp.context());
-        detallePedidoDao = new DetallePedidoDao(DetallePedido.class,mp.context());
+        pedidoDao = new PedidoDao(Pedido.class, mp.context());
+        detallePedidoDao = new DetallePedidoDao(DetallePedido.class, mp.context());
     }
-    
+
     public List<Pedido> obtenerPedidosEnEspera() {
         String estado = "ESPER";
         return pedidoDao.createQuery().filter("estado =", estado).asList();
@@ -58,7 +58,7 @@ public class PedidoServicio implements Serializable {
     }
 
     public List<Pedido> obtenerPedidosPorCliente(Cliente c) {
-        return pedidoDao.createQuery().field("cedula").containsIgnoreCase(c.getCedula()).asList();
+        return pedidoDao.createQuery().field("cliente").equal(c).asList();
 
     }
 

@@ -8,9 +8,7 @@ package ec.edu.espe.shalued.servicio;
 import ec.edu.espe.shalued.modelo.Cliente;
 import ec.edu.espe.shalued.modelo.Empleado;
 import ec.edu.espe.shalued.modelo.Usuario;
-import ec.edu.espe.shalued.servicio.ClienteServicio;
-import ec.edu.espe.shalued.servicio.EmpleadoServicio;
-import ec.edu.espe.shalued.servicio.UsuarioServicio;
+
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
@@ -118,8 +116,8 @@ public class StartUpBean {
             e.setDireccion("Desvío");
 
             empleadoServicio.crear(e);
-            
-             e = new Empleado();
+
+            e = new Empleado();
             e.setApellidos("Flores");
             e.setNombres("Cristian");
             e.setUsuario(bodeguerousuario);

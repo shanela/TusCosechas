@@ -42,22 +42,22 @@ public class credencialesBean implements Serializable {
     public void StartSession(Usuario usuario) {
         if (usuario != null) {
             this.ususarioSesion = usuario;
-            switch (this.ususarioSesion.getTipo()) {
-                case "CLI":
-                    Cliente cliente = this.clienteServicio.obtenerPorPKUsuario(usuario);
-                    if (cliente != null) {
-                        this.clienteSesion = cliente;
-                    }
-                    break;
-                case "EMP":
-//                    Empleado empleado = this.empleadoServicio.obtenerPorPKUsuario2(usuario.getUsername());
-//                    if (empleado != null) {
-//                        this.empleadoSesion = empleado;
+//            switch (this.ususarioSesion.getTipo()) {
+//                case "CLI":
+//                    Cliente cliente = this.clienteServicio.obtenerPorPKUsuario(usuario);
+//                    if (cliente != null) {
+//                        this.clienteSesion = cliente;
 //                    }
-                    break;
-                default:
-                    LOG.log(Level.INFO, "El usuario contiene tipo conocido", usuario);
-            }
+//                    break;
+//                case "EMP":
+////                    Empleado empleado = this.empleadoServicio.obtenerPorPKUsuario2(usuario.getUsername());
+////                    if (empleado != null) {
+////                        this.empleadoSesion = empleado;
+////                    }
+//                    break;
+//                default:
+//                    LOG.log(Level.INFO, "El usuario contiene tipo conocido", usuario);
+//            }
         }
 
     }
@@ -90,7 +90,7 @@ public class credencialesBean implements Serializable {
         empleadoSesion = null;
         clienteSesion = null;
         ususarioSesion = null;
-        return "login";
+        return "login.xhtml?faces-redirect=true";
     }
 
     public Usuario getUsusarioSesion() {

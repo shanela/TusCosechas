@@ -5,7 +5,6 @@
  */
 package ec.edu.espe.shalued.web;
 
-
 import ec.edu.espe.shalued.modelo.Cliente;
 import ec.edu.espe.shalued.modelo.Empleado;
 import ec.edu.espe.shalued.modelo.Usuario;
@@ -64,19 +63,19 @@ public class logInBean implements Serializable {
         if (user != null) {
             url = "/faces/views/menu";
             String UsuTipo = user.getTipo();
-
+            credenciales.StartSession(user);
             switch (UsuTipo) {
+
                 case "CLI":
                     Cliente cliente = this.clienteServicio.obtenerPorPKUsuario(user);
                     credenciales.setClienteSesion(cliente);
-                    url = "NuevoPedido.xhtml";
+                    url = "home.xhtml?faces-redirect=true";
                     break;
                 case "VEN":
-                    Empleado empleado = this.empleadoServicio.obtenerRolUsuario(UsuTipo);                            
+                    Empleado empleado = this.empleadoServicio.obtenerRolUsuario(UsuTipo);
                     credenciales.setEmpleadoSesion(empleado);
-                    
 
-                    url ="";
+                    url = "";
                     break;
                 default:
                     LOG.log(Level.INFO, "El usuario contiene tipo conocido", user);
@@ -90,8 +89,8 @@ public class logInBean implements Serializable {
         if (this.register != null) {
             if (this.register.getPassword().equals(this.passwordConfirm)) {
                 this.usuarioServicio.crear(this.register, "ACTIV", "CLI");
-                
-              //  this.clienteServicio.crear(this.nuevoCliente, this.register);
+
+                //  this.clienteServicio.crear(this.nuevoCliente, this.register);
                 this.credenciales.StartSession(this.register);
                 url = "/faces/views/logIn.xhtml";
             } else {
