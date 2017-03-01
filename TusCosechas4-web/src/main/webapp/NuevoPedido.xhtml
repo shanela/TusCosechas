@@ -3,12 +3,12 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"  
                 xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns:p="http://primefaces.org/ui"
-                template="/templates/template.xhtml"
+                template="/templates/templateMenu.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-   
+
     <ui:define name="contenido">
-         <h:form id="form1">
+        <h:form id="form1">
             <p:growl autoUpdate="true" />
             <p:panel header="Realizar Pedido">
                 <p:panelGrid columns="1" style="width: 100%;" >
@@ -40,7 +40,7 @@
             <p:panel header="Ingresar la Dirección donde se Entregará el Pedido:">
                 <p:panelGrid columns="4" style="margin: auto; width: 100%">  
 
-                   
+
                     <p:outputLabel for="provincia" value="Provincia " />
                     <p:selectOneMenu id="provincia" value="#{pedidoBean.provinciaSelectedId}" style="width:150px">
                         <p:ajax listener="#{pedidoBean.cargarCantonesporProvincia()}" update="canton" />
@@ -62,9 +62,9 @@
                     <p:inputText id="codigo_postal" required="true" value="#{pedidoBean.pedido.direccion.codigopostal}"/>
 
                 </p:panelGrid> 
-                 
+
                 <p:commandButton value="Guardar Nuevo Pedido" style="float:left;" update="@form" 
-                                     actionListener="#{pedidoBean.crearPedido()}"/>  
+                                 actionListener="#{pedidoBean.crearPedido()}"/>  
                 <p:spacer/> 
             </p:panel>
         </h:form>
@@ -114,6 +114,6 @@
                     </p:panelGrid>
                 </p:panelGrid></h:form>
         </p:dialog>
-        
+
     </ui:define>
-    </ui:composition>
+</ui:composition>

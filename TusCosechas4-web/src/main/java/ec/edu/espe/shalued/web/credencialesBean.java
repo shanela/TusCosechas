@@ -62,6 +62,14 @@ public class credencialesBean implements Serializable {
 
     }
 
+    public String getTipoUsuario() {
+        if (ususarioSesion != null) {
+            return ususarioSesion.getTipo();
+        } else {
+            return "";
+        }
+    }
+
     public Cliente getClienteSesion() {
         return clienteSesion;
     }
@@ -77,8 +85,20 @@ public class credencialesBean implements Serializable {
     public void setEmpleadoSesion(Empleado empleadoSesion) {
         this.empleadoSesion = empleadoSesion;
     }
-    
-    
-    
+
+    public String logout() {
+        empleadoSesion = null;
+        clienteSesion = null;
+        ususarioSesion = null;
+        return "login";
+    }
+
+    public Usuario getUsusarioSesion() {
+        return ususarioSesion;
+    }
+
+    public void setUsusarioSesion(Usuario ususarioSesion) {
+        this.ususarioSesion = ususarioSesion;
+    }
 
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import org.mongodb.morphia.query.Query;
@@ -39,6 +40,14 @@ public class PedidoServicio implements Serializable {
     private DetallePedidoDao detallePedidoDao;
     private BodegaDao bodegaDao;
 
+    @PostConstruct
+    public void init() {
+        mp = new MongoPersistence();
+        pedidoDao = new PedidoDao(Pedido.class, mp.context());
+        bodegaDao = new BodegaDao(Bodega.class, mp.context());
+        detallePedidoDao = new DetallePedidoDao(DetallePedido.class, mp.context());
+    }
+
     public List<Pedido> obtenerPedidosEnEspera() {
         String estado = "ESPER";
         return pedidoDao.createQuery().filter("estado =", estado).asList();
@@ -53,18 +62,18 @@ public class PedidoServicio implements Serializable {
 
     }
 
-     public boolean guardarPedido(Pedido p, Map<DetallePedido, Bodega> asignacionPedido) {
+    public boolean guardarPedido(Pedido p, Map<DetallePedido, Bodega> asignacionPedido) {
         try {
             p.setEstado("ESPER");
-            if (p.getDetalle()!= null && !p.getDetalle().isEmpty()) {
+            if (p.getDetalle() != null && !p.getDetalle().isEmpty()) {
                 List<DetallePedido> list = new ArrayList<>(p.getDetalle());
                 p.setDetalle(null);
                 pedidoDao.save(p);
-           
+
                 for (DetallePedido d : list) {
                     actualizarDisponibilidad((Bodega) asignacionPedido.get(d), d.getCantidad());
-                    d.setCodigoDetallePedido( p.getCodigoPedido());
-                   
+                    d.setCodigoDetallePedido(p.getCodigoPedido());
+
                     detallePedidoDao.save(d);
                 }
                 return true;
@@ -74,36 +83,34 @@ public class PedidoServicio implements Serializable {
         }
         return false;
     }
-    
+
     public boolean actualizarDisponibilidad(Bodega b, Integer cantReducir) {
         try {
-             LOG.log(Level.FINE, "Va a modificar la bodega:", b);
-             Query<Bodega> query = bodegaDao.createQuery().filter("codigoBodega =", b.getCodigoBodega());
-              b.setCantidad(b.getCantidad()- cantReducir);
-             UpdateOperations<Bodega> opera= bodegaDao.createUpdateOperations().set("cantidad", b.getCantidad());
-            
-             bodegaDao.update(query, opera); 
-           
-           return true;
+            LOG.log(Level.FINE, "Va a modificar la bodega:", b);
+            Query<Bodega> query = bodegaDao.createQuery().filter("codigoBodega =", b.getCodigoBodega());
+            b.setCantidad(b.getCantidad() - cantReducir);
+            UpdateOperations<Bodega> opera = bodegaDao.createUpdateOperations().set("cantidad", b.getCantidad());
+
+            bodegaDao.update(query, opera);
+
+            return true;
 
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "No se pudo actualizar la disponibilidad", e);
         }
         return false;
     }
-     
-    
+
     public void modificar(Pedido p) {
         LOG.log(Level.FINE, "Va a modificar el pedido:", p);
-        
-         Query<Pedido> query = pedidoDao.createQuery().filter("codigoPedido =", p.getCodigoPedido());
-             UpdateOperations<Pedido> opera= pedidoDao.createUpdateOperations().set("fecha", p.getFecha())
-                                                                               .set("estado", p.getEstado());
-                                                                               
-             pedidoDao.update(query, opera); 
-               
-         LOG.log(Level.INFO, "Se ha modificado el pedido: ", p);
+
+        Query<Pedido> query = pedidoDao.createQuery().filter("codigoPedido =", p.getCodigoPedido());
+        UpdateOperations<Pedido> opera = pedidoDao.createUpdateOperations().set("fecha", p.getFecha())
+                .set("estado", p.getEstado());
+
+        pedidoDao.update(query, opera);
+
+        LOG.log(Level.INFO, "Se ha modificado el pedido: ", p);
     }
-     
-     
+
 }

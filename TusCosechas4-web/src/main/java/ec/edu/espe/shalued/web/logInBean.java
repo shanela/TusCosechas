@@ -59,7 +59,7 @@ public class logInBean implements Serializable {
     }
 
     public String login() {
-        String url = "#";
+        String url = "";
         Usuario user = this.usuarioServicio.obtenerPorUsername(this.username);
         if (user != null) {
             url = "/faces/views/menu";
@@ -71,14 +71,11 @@ public class logInBean implements Serializable {
                     credenciales.setClienteSesion(cliente);
                     url = "NuevoPedido.xhtml";
                     break;
-                case "EMP":
+                case "VEN":
                     Empleado empleado = this.empleadoServicio.obtenerRolUsuario(UsuTipo);                            
                     credenciales.setEmpleadoSesion(empleado);
                     
-//                    if()
-//                    {
-//                    
-//                    }
+
                     url ="";
                     break;
                 default:
