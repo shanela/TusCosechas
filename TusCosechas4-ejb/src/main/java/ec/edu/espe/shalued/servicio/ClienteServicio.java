@@ -49,7 +49,7 @@ public class ClienteServicio implements Serializable
        return clienteDao.save(c);
 
     }
-    
+      
       public int obtenerMaximoId()
     {
        List<Cliente> cli = clienteDao.createQuery().order("-codigoCliente").asList(new FindOptions().limit(1));
@@ -62,4 +62,7 @@ public class ClienteServicio implements Serializable
         return cli.get(0).getCodigoCliente();
     }
       
+      
+       
+    
 }

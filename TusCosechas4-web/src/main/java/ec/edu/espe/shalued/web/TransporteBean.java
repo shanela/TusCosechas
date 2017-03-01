@@ -77,8 +77,9 @@ public class TransporteBean extends BaseBean implements Serializable {
     }
     
     public void eliminar() {
-        
+       this.transporteServicio.eliminar(transporteSeleccionado);
         this.transportes = this.transporteServicio.obtenerTransportes();
+  
     }
     
     public void guardar() {

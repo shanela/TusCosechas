@@ -1,6 +1,7 @@
 package ec.edu.espe.shalued.servicio;
 
 import com.gestor.glabs.mongopersistence.MongoPersistence;
+import ec.edu.espe.shalued.modelo.Dao.TransporteDao;
 import ec.edu.espe.shalued.modelo.Transporte;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ public class TransporteServicio {
     private static final Logger LOG = Logger.getLogger(TransporteServicio.class.getName());
     
     MongoPersistence mp;
+    private TransporteDao transporteDao;
 
     @PostConstruct
     public void postConstruct() {
@@ -51,10 +53,10 @@ public class TransporteServicio {
         LOG.log(Level.INFO, "Se ha modificado el transporte: ", transporte);
     }
     
-    public void eliminar(Long codigo) {
-        LOG.log(Level.FINE, "Va a eliminar el transporte de codigo:", codigo);
-        
-        LOG.log(Level.INFO, "Se ha eliminado el transporte de codigo: ", codigo);
+    public void eliminar(Transporte transporte) {
+        LOG.log(Level.FINE, "Va a eliminar el transporte de codigo:", transporte.getCodigoTransporte());
+        transporteDao.deleteById(transporte.getId());
+        LOG.log(Level.INFO, "Se ha eliminado el transporte de codigo: ", transporte.getCodigoTransporte());
     }
     
     public List<Transporte> obtenerTransportes() {

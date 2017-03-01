@@ -39,9 +39,13 @@ public class EmpleadoServicio implements Serializable {
 
     }
 
-    public Empleado obtenerPorPKUsuario(Integer id) {
+    public Empleado obtenerPorPKUsuario1(Integer id) {
         return empleadoDao.findOne("codigoEmpleado", id);
     }
 
+    
+    public Empleado obtenerRolUsuario(String rol) {
+        return empleadoDao.findOne("rol", rol);
+    }
 }
 //completar
