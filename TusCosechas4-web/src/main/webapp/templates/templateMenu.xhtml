@@ -40,26 +40,17 @@
                         <p:menubar>
                             <p:menuitem value="Pedidos" outcome=""/>                              
                         </p:menubar>
-                        <nav name="menuConductor"> 
-                            <ul>
-                                <li><h:link value="Pedidos" outcome="about?faces-redirect=true" /></li>
-                            </ul>
-                        </nav>
-
-                        <!--MENU BODEGUERO: agrega vegetales en bodega -->
-                        <nav name="menuBodeguero"> 
-                            <ul>
-                                <li><h:link value="Administracion de Bodegas" outcome="about?faces-redirect=true" /></li>
-                            </ul>
-                        </nav>
+                        
+                        <!--MENU BODEGUERO: agrega vegetales en bodega -->                                              
+                        <p:menubar>
+                            <p:menuitem value="Administracion de Bodegas" outcome=""/>                              
+                        </p:menubar>
+                        
 
                         <!--MENU VENDEDOR -->
-                        <nav name="menuVendedor"> 
-                            <ul>
-                                <li><h:link value="Pedidos por Aprobar" outcome="about?faces-redirect=true" /></li>
-                                <li><h:link value="Generar Factura" outcome="about?faces-redirect=true" /></li>
-                            </ul>
-
+                          <p:menubar>
+                            <p:menuitem value="Pedidos por Aprobar" outcome=""/>                              
+                        </p:menubar>
 
                             <aside>
                                 <ui:insert name="nav-user">
