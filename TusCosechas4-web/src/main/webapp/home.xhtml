@@ -3,16 +3,18 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"  
                 xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns:p="http://primefaces.org/ui"
-                template="/templates/template.xhtml"
+                template="/templates/templateMenu.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="contenido">
         <h:form id="form1">
             <p:growl autoUpdate="true" />
-            <h:outputText rendered="#{not empty credencialesBean.ususarioSesion}" value="Bienvenido #{credencialesBean.ususarioSesion eq null ? '': credencialesBean.ususarioSesion.username}"/>
-            <h:outputText rendered="#{not empty credencialesBean.clienteSesion}" value="#{credencialesBean.clienteSesion eq null ? '': credencialesBean.clienteSesion.nombres}"/>
-            <h:outputText rendered="#{not empty credencialesBean.empleadoSesion}" value="#{credencialesBean.empleadoSesion eq null ? '': credencialesBean.empleadoSesion.nombres}"/>
+            <p:panel header="Home" style="width: 100% ; margin: 0 auto; height: 400px;">
+                <h:outputText rendered="#{not empty credencialesBean.ususarioSesion}" value="Bienvenid@ #{credencialesBean.ususarioSesion eq null ? '': credencialesBean.ususarioSesion.username}"/>
+    <!--            <h:outputText rendered="#{not empty credencialesBean.clienteSesion}" value="#{credencialesBean.clienteSesion eq null ? '': credencialesBean.clienteSesion.nombres}"/>
+                <h:outputText rendered="#{not empty credencialesBean.empleadoSesion}" value="#{credencialesBean.empleadoSesion eq null ? '': credencialesBean.empleadoSesion.nombres}"/>-->
+            </p:panel>
         </h:form>
     </ui:define>
 </ui:composition>

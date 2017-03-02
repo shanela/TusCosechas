@@ -40,20 +40,8 @@
             <p:panel header="Ingresar la Dirección donde se Entregará el Pedido:">
                 <p:panelGrid columns="4" style="margin: auto; width: 100%">  
 
-
-                    <p:outputLabel for="provincia" value="Provincia " />
-                    <p:selectOneMenu id="provincia" value="#{pedidoBean.provinciaSelectedId}" style="width:150px">
-                        <p:ajax listener="#{pedidoBean.cargarCantonesporProvincia()}" update="canton" />
-                        <f:selectItem itemLabel="Seleccionar Provincia" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{pedidoBean.provincias}"  var="p" itemLabel="#{p.nombre}" itemValue="#{p.codigoProvincia}"/>
-                    </p:selectOneMenu>
-
                     <p:outputLabel for="canton" value="Canton " />
-                    <p:selectOneMenu id="canton" value="#{pedidoBean.cantonSelectedId}" style="width:150px">
-                        <f:selectItem itemLabel="Seleccionar Canton" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{pedidoBean.cantones}" var="c" itemLabel="#{c.nombre}" itemValue="#{c.codigoCanton}"/>
-                    </p:selectOneMenu>
-
+                    <p:inputText label="Canton" required="true" value="#{pedidoBean.canton}" />                      
                     <p:outputLabel value="Calle Principal:"/>
                     <p:inputText label="Calle Principal" required="true" value="#{pedidoBean.pedido.direccion.calleprincipal}" />  
                     <p:outputLabel value="Calle Secundaria:"/>

@@ -5,12 +5,12 @@
  */
 package ec.edu.espe.shalued.servicio;
 
+import ec.edu.espe.shalued.modelo.Canton;
 import ec.edu.espe.shalued.modelo.Cliente;
 import ec.edu.espe.shalued.modelo.Empleado;
+import ec.edu.espe.shalued.modelo.Provincia;
 import ec.edu.espe.shalued.modelo.Usuario;
-import ec.edu.espe.shalued.servicio.ClienteServicio;
-import ec.edu.espe.shalued.servicio.EmpleadoServicio;
-import ec.edu.espe.shalued.servicio.UsuarioServicio;
+
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
@@ -32,9 +32,14 @@ public class StartUpBean {
     EmpleadoServicio empleadoServicio;
     @Inject
     ClienteServicio clienteServicio;
+    
+    @Inject
+    UbicacionServicio ubicacionServicio;
+
 
     @PostConstruct
-    public void init() {
+    public void init() 
+    {
         List<Usuario> list = usuarioServicio.obtenerTodos();
         if (list == null || list.isEmpty()) {
             System.out.println("Lista vacia se van a crear los usuarios por defecto");
@@ -118,8 +123,8 @@ public class StartUpBean {
             e.setDireccion("Desvío");
 
             empleadoServicio.crear(e);
-            
-             e = new Empleado();
+
+            e = new Empleado();
             e.setApellidos("Flores");
             e.setNombres("Cristian");
             e.setUsuario(bodeguerousuario);
@@ -131,6 +136,65 @@ public class StartUpBean {
             empleadoServicio.crear(e);
 
         }
-
+        
+        
+        
+        List<Provincia> provincias = ubicacionServicio.obtenerTodasProvincias();
+        if (provincias == null || provincias.isEmpty()) 
+        {
+            Provincia p = new Provincia();          
+            p.setNombre("Bolivar");      
+            ubicacionServicio.crearProvincia(p);
+            
+            Provincia p1 = new Provincia();
+            p1.setNombre("Pichincha");      
+            ubicacionServicio.crearProvincia(p1);
+            
+            Provincia p2 = new Provincia();
+            p2.setNombre("Azuay");      
+            ubicacionServicio.crearProvincia(p2);
+            
+            Provincia p3 = new Provincia();
+            p3.setNombre("Chimborazo");      
+            ubicacionServicio.crearProvincia(p3);
+            
+            Provincia p4 = new Provincia();
+            p4.setNombre("Guayas");      
+            ubicacionServicio.crearProvincia(p4);         
+            
+            
+        }
+        
+              List<Canton> cantones = ubicacionServicio.obtenerTodasCantones();
+        if (cantones == null || cantones.isEmpty()) 
+        {
+            Canton c = new Canton();
+            
+            c.setNombre("Guaranda");      
+            ubicacionServicio.crearCanton(c);          
+            Canton c1 = new Canton();
+            c1.setNombre("Chillanes");      
+            ubicacionServicio.crearCanton(c1);
+            
+            Canton c2 = new Canton();
+            c2.setNombre("Cayambe");      
+            ubicacionServicio.crearCanton(c2);            
+            Canton c3 = new Canton();
+            c3.setNombre("Mejia");      
+            ubicacionServicio.crearCanton(c3);
+            
+            Canton c4 = new Canton();
+            c4.setNombre("Riobamba");      
+            ubicacionServicio.crearCanton(c4);
+            Canton c5 = new Canton();
+            c5.setNombre("Guano");      
+            ubicacionServicio.crearCanton(c5);
+            
+            
+           
+        }
+       
+        
+        
     }
 }

@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import org.mongodb.morphia.query.FindOptions;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
@@ -45,10 +46,10 @@ public class PedidoServicio implements Serializable {
     public void postConstruct() {
         mp = new MongoPersistence();
         bodegaDao = new BodegaDao(Bodega.class, mp.context());
-        pedidoDao = new PedidoDao(Pedido.class,mp.context());
-        detallePedidoDao = new DetallePedidoDao(DetallePedido.class,mp.context());
+        pedidoDao = new PedidoDao(Pedido.class, mp.context());
+        detallePedidoDao = new DetallePedidoDao(DetallePedido.class, mp.context());
     }
-    
+
     public List<Pedido> obtenerPedidosEnEspera() {
         String estado = "ESPER";
         return pedidoDao.createQuery().filter("estado =", estado).asList();
@@ -63,13 +64,13 @@ public class PedidoServicio implements Serializable {
         return this.mp.context().find(Pedido.class).asList();
     }
 
-                            public List<Pedido> obtenerPedidosPorCliente(Cliente c) {
-                                return pedidoDao.createQuery().field("codigoCliente").equalIgnoreCase(c.getCodigoCliente()).asList();
-                            }
+    public List<Pedido> obtenerPedidosPorCliente(Cliente c) {
+        return pedidoDao.createQuery().field("cliente").equal(c).asList();
+    }
 
-                            public List<Pedido> obtenerPedidosPorVendedor(Empleado e) {
-                                return pedidoDao.createQuery().field("rol").containsIgnoreCase(e.getRol()).asList();
-                            }
+    public List<Pedido> obtenerPedidosPorVendedor(Empleado e) {
+            return pedidoDao.createQuery().field("rol").containsIgnoreCase(e.getRol()).asList();
+        }
 
     
     public List<Pedido> obtenerEstados(Pedido p) {
@@ -78,6 +79,8 @@ public class PedidoServicio implements Serializable {
 
     public boolean guardarPedido(Pedido p, Map<DetallePedido, Bodega> asignacionPedido) {
         try {
+              Integer id =obtenerMaximoId()+1;
+              p.setCodigoPedido(id);
             p.setEstado("ESPER");
             if (p.getDetalle() != null && !p.getDetalle().isEmpty()) {
                 List<DetallePedido> list = new ArrayList<>(p.getDetalle());
@@ -127,4 +130,18 @@ public class PedidoServicio implements Serializable {
         LOG.log(Level.INFO, "Se ha modificado el pedido: ", p);
     }
 
+      public int obtenerMaximoId()
+    {
+       List<Pedido> pedidos = pedidoDao.createQuery().order("-codigoPedido").asList(new FindOptions().limit(1));
+       
+       if ((pedidos == null) || (pedidos.isEmpty()))
+       {
+           return 0;
+       }
+       
+        return pedidos.get(0).getCodigoPedido();
+    }
+    
+    
+    
 }

@@ -8,8 +8,8 @@ package ec.edu.espe.shalued.web;
 import ec.edu.espe.shalued.modelo.Bodega;
 import ec.edu.espe.shalued.modelo.Canton;
 import ec.edu.espe.shalued.modelo.Cliente;
-import ec.edu.espe.shalued.modelo.Dao.PedidoDao;
 import ec.edu.espe.shalued.modelo.DetallePedido;
+import ec.edu.espe.shalued.modelo.Direccion;
 import ec.edu.espe.shalued.modelo.Pedido;
 import ec.edu.espe.shalued.modelo.Provincia;
 import ec.edu.espe.shalued.modelo.Vegetal;
@@ -35,7 +35,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 import org.apache.commons.beanutils.BeanUtils;
-import org.mongodb.morphia.query.FindOptions;
 
 /**
  *
@@ -70,14 +69,15 @@ public class PedidoBean extends BaseBean implements Serializable {
     private Vegetal vegetal;
     private Bodega bodegaSelected;
     private Long cantonSelectedId;
-    private Long provinciaSelectedId;
+    private Integer provinciaSelectedId;
     private Pedido pedido;
     private Cliente cliente;
     private Integer cant = 1;
     private Long idTemp = 1L;
     private Pedido pedidoSeleccionado;
     private Pedido pedidoEstadoSeleccionado;
-    private PedidoDao pedidoDao;
+    private Provincia provincia;
+    private Canton canton;
 
     public Vegetal getVegetal() {
         return vegetal;
@@ -90,14 +90,13 @@ public class PedidoBean extends BaseBean implements Serializable {
     @PostConstruct
     public void postContructor() {
  //       this.provincias = this.ubicacionServicio.obtenerTodasProvincias();
-//        this.cantones = this.ubicacionServicio.obtenerTodasCantones();
+        this.cantones = this.ubicacionServicio.obtenerTodasCantones();
         this.pedidos = this.pedidoServicio.obtenertodoslosPedidos();
         this.bodegas = bodegaServicio.obtenerVegetalesdisponibles();
         this.pedido = new Pedido();
         this.asignacionBodegaDetalle = new HashMap<>();
         this.pedidos= pedidoServicio.obtenerPedidosPorCliente(credencialesBean.getClienteSesion());
-        this.pedidosEmpleado=pedidoServicio.obtenerPedidosPorVendedor(credencialesBean.getEmpleadoSesion());
-//        this.pedidos= pedidoServicio.obtenerPedidosPorCliente(credencialesBean.getClienteSesion());
+        
     }
 
     public void consultarBodegaDisponibilidad() {
@@ -153,10 +152,9 @@ public class PedidoBean extends BaseBean implements Serializable {
     }
 
     public void crearNuevoPedido() {
-//        pedido.setProCodigo(provinciaSelectedId);
-//        pedido.setCanCodigo(cantonSelectedId);
-        Integer id =obtenerMaximoId()+1;
-        pedido.setCodigoPedido(id);
+        Direccion d = new Direccion();
+        
+    //    pedido.getDireccion().
         pedido.setFecha(new Date());
         pedido.setCliente(credencialesBean.getClienteSesion());
 
@@ -169,21 +167,6 @@ public class PedidoBean extends BaseBean implements Serializable {
         }
         pedido = new Pedido();
     }
-    
-    
-    
-      public int obtenerMaximoId()
-    {
-       List<Pedido> pedidos = pedidoDao.createQuery().order("-codigoPedido").asList(new FindOptions().limit(1));
-       
-       if ((pedidos == null) || (pedidos.isEmpty()))
-       {
-           return 0;
-       }
-       
-        return pedidos.get(0).getCodigoPedido();
-    }
-    
 
     public String cambioEtiquetaEstadoPedido2(String estadoPedido) {
         if ("APROB".equals(estadoPedido)) {
@@ -288,13 +271,30 @@ public class PedidoBean extends BaseBean implements Serializable {
         this.cantonSelectedId = cantonSelectedId;
     }
 
-    public Long getProvinciaSelectedId() {
+    public Integer getProvinciaSelectedId() {
         return provinciaSelectedId;
     }
 
-    public void setProvinciaSelectedId(Long provinciaSelectedId) {
+    public void setProvinciaSelectedId(Integer provinciaSelectedId) {
         this.provinciaSelectedId = provinciaSelectedId;
     }
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    public Canton getCanton() {
+        return canton;
+    }
+
+    public void setCanton(Canton canton) {
+        this.canton = canton;
+    }
+    
 
     public Bodega getBodegaSelected() {
         return bodegaSelected;

@@ -22,7 +22,7 @@ import org.mongodb.morphia.annotations.Indexes;
 @Indexes({@Index(fields = @Field("codigoProvincia"))})
 public class Provincia extends BaseEntity{
     
-    private Long codigoProvincia;
+    private Integer codigoProvincia;
     private String nombre;
     
     @Embedded
@@ -31,15 +31,15 @@ public class Provincia extends BaseEntity{
     public Provincia() {
     }
 
- public Provincia(Long proCodigo) {
-        this.codigoProvincia = proCodigo;
+    public Provincia(Integer codigoProvincia) {
+        this.codigoProvincia = codigoProvincia;
     }
 
-    public Long getCodigoProvincia() {
+    public Integer getCodigoProvincia() {
         return codigoProvincia;
     }
 
-    public void setCodigoProvincia(Long codigoProvincia) {
+    public void setCodigoProvincia(Integer codigoProvincia) {
         this.codigoProvincia = codigoProvincia;
     }
 
