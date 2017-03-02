@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/templateMenu.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="contenido">
+        <h:form id="form1">
+            <p:growl autoUpdate="true" />
+            <p:panel header="Administración de Entregas">
+                <p:panelGrid columns="1" style="width: 100%;" >
+                    <p:outputLabel value="Pedidos en Camino"/>
+                    <p:dataTable value="#{pedidoBean.pedidos}" var="pedido" paginator="true" paginatorPosition="bottom" selectionMode="single" id="tablapedido"
+                                 selection="#{pedidoBean.pedidoSeleccionado}" rowKey="#{pedido.codigoPedido}"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                        <p:ajax event="rowSelect" update="@form" />
+                        <p:ajax event="rowUnselect" update="@form" />
+                       
+                        <p:column headerText="Id Pedido">
+                            <h:outputText value="#{pedido.codigoPedido}"
+                                          <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Nombre Cliente">#{pedido.cliente.nombres}</p:column>
+                        <p:column headerText="Apellido Cliente">#{pedido.cliente.apellidos}</p:column>
+                        <p:column headerText="Dirección">#{pedido.cliente.direccion}</p:column>
+                        <p:column headerText="Fecha Pedido">#{pedido.fecha}</p:column>
+                        <p:column headerText="Estado Pedido">#{pedidoBean.cambioEtiquetaEstadoPedido2(pedido.estado)}</p:column>
+                    </p:dataTable>
+
+                    <p:commandButton value="Modificar Estado del Pedido" actionListener="#{pedidoBean.modificar()}"
+                                     immediate="true" update=agregaDialogId" rendered="#{not empty pedidoBean.pedidoSeleccionado}"                                      disabled="#{not empty  pedidoBean.pedido}" style="float:right;"  oncomplete="PF('dlg1').show();" />
+                </p:panelGrid> 
+                <p:spacer/> 
+            </p:panel>
+        
+        
+        <p:dialog header="Cambiar Estado del Pedido" widgetVar="dlg1" id="agregaDialogId" draggable="false" closable="false" width="400" minHeight="40">
+          <p:growl autoUpdate="true" />
+          <p:panelGrid columns="1">
+            <p:outputLabel for="estado" value="Estado " />
+            <p:selectOneMenu id="estado" value="#{pedidoBean.pedidoEstadoSeleccionado}" style="width:150px">
+                <p:ajax listener="#{pedidoBean.cargarEstados()}"
+                        <f:selectItem itemLabel="Seleccionar Estado" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{pedidoBean.estadosPedido}" var="e" itemLabel="#{e.estado}" itemValue="#{e.codigoPedido}"/>
+            </p:selectOneMenu>
+                      
+                    <p:panelGrid columns="2">
+                        <p:commandButton value="Guardar" style="float:right;" update="@form :form1:tablapedido" 
+                                         actionListener="#{pedidoBean.modificar()}" 
+                                         />
+                        <p:commandButton value="Cancelar" style="float:right;" immediate="true" onclick="PF('dlg1').hide();" />
+                    </p:panelGrid>
+
+          </p:panelGrid>
+                
+         </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

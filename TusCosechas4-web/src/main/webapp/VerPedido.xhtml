@@ -3,7 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"  
                 xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns:p="http://primefaces.org/ui"
-                template="/templates/template.xhtml"
+                template="/templates/templateMenu.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="contenido">
@@ -25,9 +25,6 @@
                             <h:outputText value="#{misPedido.fecha}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
-                        </p:column>
-                         <p:column headerText="Vegetal Pedido">
-                             <h:outputText value="#{pedidoBean.vegetal.nombre} "/>
                         </p:column>
                         <p:column headerText="Estado Pedido">
                             <h:outputText value="#{pedidoBean.cambioEtiquetaEstadoPedido2(misPedido.estado)} "/>

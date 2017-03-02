@@ -89,7 +89,7 @@ public class BodegaServicio implements Serializable {
     }
 
     public List<Bodega> obtenerVegetalesdisponibles() {
-        String estado = "VIGEN";
+        String estado = "vigente";
         return bodegaDao.createQuery().filter("estado =", estado).asList();
     }
 

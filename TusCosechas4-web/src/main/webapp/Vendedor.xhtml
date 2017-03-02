@@ -3,7 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"  
                 xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns:p="http://primefaces.org/ui"
-                template="/templates/template.xhtml"
+                template="/templates/templateMenu.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="contenido">
@@ -12,26 +12,24 @@
             <p:panel header="Administración de Pedidos">
                 <p:panelGrid columns="1" style="width: 100%;" >
                     <p:outputLabel value="Pedidos en Espera:"/>
-                    <p:dataTable value="#{pedidoBean.pedidosEmpleado}" var="pedido" paginator="true" paginatorPosition="bottom" selectionMode="single" id="tablapedido"
-                                 selection="#{pedidoBean.pedidoSeleccionado}" rowKey="#{pedido.codigoPedido}"
+                    <p:dataTable value="#{vendedorBean.pedidos}" var="pedido" paginator="true" paginatorPosition="bottom" selectionMode="single" id="tablapedido"
+                                 selection="#{vendedorBean.pedidoSeleccionado}" rowKey="#{pedido.codigoPedido}"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
                         <p:ajax event="rowSelect" update="@form" />
                         <p:ajax event="rowUnselect" update="@form" />
                        
-                        <p:column headerText="Id Pedido">
-                            <h:outputText value="#{pedido.codigoPedido}"
-                                          <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputText>
-                        </p:column>
+                        <p:column headerText="Id Pedido">="#{pedido.codigoPedido}" </p:column>
                         <p:column headerText="Nombre Cliente">#{pedido.cliente.nombres}</p:column>
                         <p:column headerText="Apellido Cliente">#{pedido.cliente.apellidos}</p:column>
                         <p:column headerText="Dirección">#{pedido.cliente.direccion}</p:column>
-                        <p:column headerText="Fecha Pedido">#{pedido.fecha}</p:column>
+                        <p:column headerText="Fecha Pedido">
+                           <h:outputText #{pedido.fecha}</h:outputText>
+                             <f:convertDateTime pattern="dd/MM/yyyy"/>                     
+                        </p:column>
                         <p:column headerText="Estado Pedido">#{pedidoBean.cambioEtiquetaEstadoPedido2(pedido.estado)}</p:column>
                     </p:dataTable>
 
-                    <p:commandButton value="Modificar Estado del Pedido" actionListener="#{pedidoBean.modificar()}"
-                                     immediate="true" update=agregaDialogId" rendered="#{not empty pedidoBean.pedidoSeleccionado}"                                      disabled="#{not empty  pedidoBean.pedido}" style="float:right;"  oncomplete="PF('dlg1').show();" />
+                    <p:commandButton value="Modificar Estado del Pedido" immediate="true" update=agregaDialogId" rendered="#{not empty pedidoBean.pedidoSeleccionado}"                                      disabled="#{not empty  pedidoBean.pedido}" style="float:right;"  oncomplete="PF('dlg1').show();" />
                 </p:panelGrid> 
                 <p:spacer/> 
             </p:panel>
@@ -41,14 +39,15 @@
           <p:growl autoUpdate="true" />
           <p:panelGrid columns="1">
             <p:outputLabel for="estado" value="Estado " />
-            <p:selectOneMenu id="estado" value="#{pedidoBean.pedidoEstadoSeleccionado}" style="width:150px">
-                <p:ajax listener="#{pedidoBean.cargarEstados()}"
-                        <f:selectItem itemLabel="Seleccionar Estado" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{pedidoBean.estadosPedido}" var="e" itemLabel="#{e.estado}" itemValue="#{e.codigoPedido}"/>
-            </p:selectOneMenu>
+            <p:selectOneMenu id="estado" required="true" value="#{pedidoBean.nuevo.estado}"
+                                     requiredMessage="Por avor Seleccione el estado">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="ACEPTADO" itemValue="ACEPTADO"/>
+                        <f:selectItem itemLabel="RECHAZADO" itemValue="RECHAZADO"/>
+                    </p:selectOneMenu>
             
             <p:dataTable value="#{transporteBean.transportes}" 
-                                 var="transporteDisponible" 
+                                 var="transporte" 
                                  paginator="true" 
                                  rows="8"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
@@ -59,25 +58,25 @@
                         <p:ajax event="rowSelect"  />
 
                         <p:column headerText="Codigo del Vehiculo">
-                            <h:outputText value="#{transporteDisponible.codigoTransporte}"/>
+                            <h:outputText value="#{transporte.codigoTransporte}"/>
                         </p:column>
                         
                         <p:column headerText="Matricula del Vehiculo">
-                            <h:outputText value="#{transporteDisponible.matricula}"/>
+                            <h:outputText value="#{transporte.matricula}"/>
                         </p:column>
                         
                         <p:column headerText="Modelo del Vehiculo">
-                            <h:outputText value="#{transporteDisponible.modelo}"/>
+                            <h:outputText value="#{transporte.modelo}"/>
                         </p:column>
                         
                         <p:column headerText="Capacidad de Carga del Vehiculo">
-                            <h:outputText value="#{transporteDisponible.capacidadcarga}"/>
+                            <h:outputText value="#{transporte.capacidadcarga}"/>
                         </p:column>       
                     </p:dataTable>
             
                     <p:panelGrid columns="2">
                         <p:commandButton value="Guardar" style="float:right;" update="@form :form1:tablapedido" 
-                                         actionListener="#{pedidoBean.modificar()}" 
+                                         actionListener="#{vendedorBean.modificar()}" 
                                          />
                         <p:commandButton value="Cancelar" style="float:right;" immediate="true" onclick="PF('dlg1').hide();" />
                     </p:panelGrid>

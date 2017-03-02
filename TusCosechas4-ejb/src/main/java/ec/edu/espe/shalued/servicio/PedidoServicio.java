@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.FindOptions;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -65,7 +66,7 @@ public class PedidoServicio implements Serializable {
     }
 
     public List<Pedido> obtenerPedidosPorCliente(Cliente c) {
-        return pedidoDao.createQuery().field("cliente").equal(c).asList();
+        return pedidoDao.createQuery().disableValidation().field("cliente.$id").equal(c.getId()).asList();
     }
 
     public List<Pedido> obtenerPedidosPorVendedor(Empleado e) {

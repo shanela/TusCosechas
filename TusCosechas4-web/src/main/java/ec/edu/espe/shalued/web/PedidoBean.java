@@ -78,6 +78,7 @@ public class PedidoBean extends BaseBean implements Serializable {
     private Pedido pedidoEstadoSeleccionado;
     private Provincia provincia;
     private Canton canton;
+    private String cantonNombre;
 
     public Vegetal getVegetal() {
         return vegetal;
@@ -96,7 +97,8 @@ public class PedidoBean extends BaseBean implements Serializable {
         this.pedido = new Pedido();
         this.asignacionBodegaDetalle = new HashMap<>();
         this.pedidos= pedidoServicio.obtenerPedidosPorCliente(credencialesBean.getClienteSesion());
-        
+        Direccion d = new Direccion();
+        pedido.setDireccion(d);
     }
 
     public void consultarBodegaDisponibilidad() {
@@ -152,9 +154,9 @@ public class PedidoBean extends BaseBean implements Serializable {
     }
 
     public void crearNuevoPedido() {
-        Direccion d = new Direccion();
-        
-    //    pedido.getDireccion().
+        Canton c = new Canton();
+        c.setNombre(cantonNombre);
+        pedido.getDireccion().setCanton(canton);
         pedido.setFecha(new Date());
         pedido.setCliente(credencialesBean.getClienteSesion());
 
@@ -167,7 +169,18 @@ public class PedidoBean extends BaseBean implements Serializable {
         }
         pedido = new Pedido();
     }
-
+    
+    
+       public void guardar() {
+        if (super.isModify()) {
+            this.pedidoServicio.modificar(pedido);
+            FacesUtil.addMessageInfo("Se ha modificado el Pedido:" + this.pedido.getCodigoPedido());
+        }
+        this.pedidos = this.pedidoServicio.obtenerPedidosEnEspera();
+        super.reset();
+        this.pedido = null;
+    }
+    
     public String cambioEtiquetaEstadoPedido2(String estadoPedido) {
         if ("APROB".equals(estadoPedido)) {
             return "Aprobado";
@@ -196,15 +209,7 @@ public class PedidoBean extends BaseBean implements Serializable {
     }
    
   
-    public void guardar() {
-        if (super.isModify()) {
-            this.pedidoServicio.modificar(pedido);
-            FacesUtil.addMessageInfo("Se ha modificado el Pedido:" + this.pedido.getCodigoPedido());
-        }
-        this.pedidos = this.pedidoServicio.obtenerPedidosEnEspera();
-        super.reset();
-        this.pedido = null;
-    }
+ 
     
     public void cancelar() {
         super.reset();
@@ -334,6 +339,14 @@ public class PedidoBean extends BaseBean implements Serializable {
 
     public void setPedidosEmpleado(List<Pedido> pedidosEmpleado) {
         this.pedidosEmpleado = pedidosEmpleado;
+    }
+
+    public String getCantonNombre() {
+        return cantonNombre;
+    }
+
+    public void setCantonNombre(String cantonNombre) {
+        this.cantonNombre = cantonNombre;
     }
     
     

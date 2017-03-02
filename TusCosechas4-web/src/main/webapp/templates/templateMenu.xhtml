@@ -24,8 +24,8 @@
                             <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'CLI'}">
                                 <p:menuitem value="Home" outcome="home"/>
                                 <p:menuitem value="Nuevo Pedido" outcome="NuevoPedido"/>
-                                <p:menuitem value="Ver Pedidos Realizados" outcome="NuevoPedido"/>                    
-                                <p:menuitem value="Ver Facturas" outcome="NuevoPedido" />
+                                <p:menuitem value="Ver Pedidos Realizados" outcome="VerPedido"/>                    
+                                <p:menuitem value="Ver Facturas" outcome="VerFactura" />
                                 <f:facet name="options">
                                     <h:commandLink  value="Logout"  action="#{credencialesBean.logout}" />
                                 </f:facet>
@@ -35,25 +35,25 @@
                             <!--MENU GERENTE crud de todo-->
                             <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'GER'}">
                                 <p:menuitem value="Empleados" outcome=""/>
-                                <p:menuitem value="Lotes" />                    
-                                <p:menuitem value="Transportes" />
-                                <p:menuitem value="Vegetales" />    
+                                <p:menuitem value="Lotes" outcome="lotes" />                    
+                                <p:menuitem value="Transportes" outcome="transporte" />
+                                <p:menuitem value="Vegetales" outcome="vegetales" />    
                             </p:menubar>
 
                             <!--MENU CONDUCTOR Cambia el estado del pedido (en camino u entregado) -->
                             <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'CON'}">
-                                <p:menuitem value="Pedidos"/>                              
+                                <p:menuitem value="Pedidos" outcome="Conductor"/>                              
                             </p:menubar>
 
                             <!--MENU BODEGUERO: agrega vegetales en bodega -->                                              
                             <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'BOD'}">
-                                <p:menuitem value="Administracion de Bodegas" />                              
+                                <p:menuitem value="Administracion de Bodegas" outcome="bodegas"/>                              
                             </p:menubar>
 
 
                             <!--MENU VENDEDOR -->
                             <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'VEN'}">
-                                <p:menuitem value="Pedidos por Aprobar" outcome=""/>                              
+                                <p:menuitem value="Pedidos por Aprobar" outcome="Conductor"/>                              
                             </p:menubar>
                         </h:form>
                     </div>
