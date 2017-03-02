@@ -37,7 +37,7 @@ public class TransporteServicio implements Serializable {
     
     public Key<Transporte> crear(Transporte transporte) 
     {
-       LOG.log(Level.FINE, "Va a crear el vegetal:", transporte);
+       LOG.log(Level.FINE, "Va a crear el transporte:", transporte);
        Integer id =obtenerMaximoId()+1;
        transporte.setCodigoTransporte(id);
        return transporteDao.save(transporte);
@@ -46,7 +46,7 @@ public class TransporteServicio implements Serializable {
     
       public int obtenerMaximoId()
     {
-       List<Transporte> transportes = transporteDao.createQuery().order("-codigoVegetal").asList(new FindOptions().limit(1));
+       List<Transporte> transportes = transporteDao.createQuery().order("-codigoTransporte").asList(new FindOptions().limit(1));
        
        if ((transportes == null) || (transportes.isEmpty()))
        {

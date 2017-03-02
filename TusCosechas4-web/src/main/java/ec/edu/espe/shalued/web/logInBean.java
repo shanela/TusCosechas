@@ -64,6 +64,7 @@ public class logInBean implements Serializable {
             url = "/faces/views/menu";
             String UsuTipo = user.getTipo();
             credenciales.StartSession(user);
+            Empleado empleado;
             switch (UsuTipo) {
 
                 case "CLI":
@@ -72,11 +73,29 @@ public class logInBean implements Serializable {
                     url = "home.xhtml?faces-redirect=true";
                     break;
                 case "VEN":
-                    Empleado empleado = this.empleadoServicio.obtenerRolUsuario(UsuTipo);
+                     empleado = this.empleadoServicio.obtenerRolUsuario(UsuTipo);
                     credenciales.setEmpleadoSesion(empleado);
-
-                    url = "";
+                    url = "home.xhtml?faces-redirect=true";
                     break;
+                    
+                case "GER":
+                     empleado = this.empleadoServicio.obtenerRolUsuario(UsuTipo);
+                    credenciales.setEmpleadoSesion(empleado);
+                    url = "home.xhtml?faces-redirect=true";
+                    break;
+                    
+                 case "BOD":
+                     empleado = this.empleadoServicio.obtenerRolUsuario(UsuTipo);
+                    credenciales.setEmpleadoSesion(empleado);
+                    url = "home.xhtml?faces-redirect=true";
+                    break;
+                    
+                 case "CON":
+                     empleado = this.empleadoServicio.obtenerRolUsuario(UsuTipo);
+                    credenciales.setEmpleadoSesion(empleado);
+                    url = "home.xhtml?faces-redirect=true";
+                    break;
+                
                 default:
                     LOG.log(Level.INFO, "El usuario contiene tipo conocido", user);
             }

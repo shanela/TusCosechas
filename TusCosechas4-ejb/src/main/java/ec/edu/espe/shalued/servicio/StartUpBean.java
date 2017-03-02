@@ -8,8 +8,11 @@ package ec.edu.espe.shalued.servicio;
 import ec.edu.espe.shalued.modelo.Canton;
 import ec.edu.espe.shalued.modelo.Cliente;
 import ec.edu.espe.shalued.modelo.Empleado;
+import ec.edu.espe.shalued.modelo.Lote;
 import ec.edu.espe.shalued.modelo.Provincia;
+import ec.edu.espe.shalued.modelo.Transporte;
 import ec.edu.espe.shalued.modelo.Usuario;
+import ec.edu.espe.shalued.modelo.Vegetal;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -35,6 +38,15 @@ public class StartUpBean {
     
     @Inject
     UbicacionServicio ubicacionServicio;
+    
+    @Inject
+    TransporteServicio transporteServicio;
+    
+     @Inject
+    VegetalServicio vegetalServicio;
+     
+    @Inject
+    LoteServicio loteServicio;
 
 
     @PostConstruct
@@ -136,9 +148,7 @@ public class StartUpBean {
             empleadoServicio.crear(e);
 
         }
-        
-        
-        
+                
         List<Provincia> provincias = ubicacionServicio.obtenerTodasProvincias();
         if (provincias == null || provincias.isEmpty()) 
         {
@@ -189,12 +199,200 @@ public class StartUpBean {
             Canton c5 = new Canton();
             c5.setNombre("Guano");      
             ubicacionServicio.crearCanton(c5);
-            
-            
            
         }
        
+         List<Transporte> transportes = transporteServicio.obtenerTransportes();
+        if (transportes == null || transportes.isEmpty()) 
+        {
+            Usuario conductorusuario = new Usuario();
+            conductorusuario.setEstado("ACT");
+            conductorusuario.setPassword("1234");
+            conductorusuario.setTipo("CON");
+            conductorusuario.setUsername("conductor");
+            usuarioServicio.crear(conductorusuario);
+                        
+            Empleado e = new Empleado();
+            e.setApellidos("Salguero");
+            e.setNombres("Edagar");
+            e.setUsuario(conductorusuario);
+            e.setCedula("0201093176");
+            e.setRol("CON");
+            e.setTelefono("0987654321");
+            e.setDireccion("Sangolqui");
+            empleadoServicio.crear(e);
+            
+            Transporte t = new Transporte();
+            t.setMarca("Kia");
+            t.setModelo("Sportach");
+            t.setAnio(2016);
+            t.setCapacidadcarga(60);
+            t.setVolumen(40);
+            t.setMatricula("ASD234");
+            t.setConductor(e);
+            transporteServicio.crear(t);
+            
+            Usuario conductorusuario1 = new Usuario();
+            conductorusuario.setEstado("ACT");
+            conductorusuario.setPassword("1234");
+            conductorusuario.setTipo("CON");
+            conductorusuario.setUsername("conductor1");
+            usuarioServicio.crear(conductorusuario1);
+            
+            Empleado e1 = new Empleado();
+            e1.setApellidos("Gavilanez");
+            e1.setNombres("Marion");
+            e1.setUsuario(conductorusuario1);
+            e1.setCedula("1716308216");
+            e1.setRol("CON");
+            e1.setTelefono("0966644324");
+            e1.setDireccion("San Gartolo");
+            
+            Transporte t1 = new Transporte();
+            t1.setMarca("Ford");
+            t1.setModelo("Revolutions");
+            t1.setAnio(2017);
+            t1.setCapacidadcarga(8000);
+            t1.setVolumen(600);
+            t1.setMatricula("WER204");
+            t1.setConductor(e1);
+            transporteServicio.crear(t1);
+            
+             Usuario conductorusuario2 = new Usuario();
+            conductorusuario.setEstado("ACT");
+            conductorusuario.setPassword("1234");
+            conductorusuario.setTipo("CON");
+            conductorusuario.setUsername("conductor2");
+            usuarioServicio.crear(conductorusuario2);
+            
+            
+            Empleado e2 = new Empleado();
+            e2.setApellidos("Gavilanez");
+            e2.setNombres("Marion");
+            e2.setUsuario(conductorusuario2);
+            e2.setCedula("1716308216");
+            e2.setRol("CON");
+            e2.setTelefono("0966644324");
+            e2.setDireccion("San Gartolo");
+            
+            Transporte t2 = new Transporte();
+            t2.setMarca("Ford");
+            t2.setModelo("Revolutions");
+            t2.setAnio(2017);
+            t2.setCapacidadcarga(8000);
+            t2.setVolumen(600);
+            t2.setMatricula("WER204");
+            t2.setConductor(e2);
+            transporteServicio.crear(t2);
+            
+             Usuario conductorusuario3 = new Usuario();
+            conductorusuario.setEstado("ACT");
+            conductorusuario.setPassword("1234");
+            conductorusuario.setTipo("CON");
+            conductorusuario.setUsername("conductor3");
+            usuarioServicio.crear(conductorusuario3);
+            
+            
+             Empleado e3 = new Empleado();
+            e3.setApellidos("Gavilanez");
+            e3.setNombres("Marion");
+            e3.setUsuario(conductorusuario3);
+            e3.setCedula("1716308216");
+            e3.setRol("CON");
+            e3.setTelefono("0966644324");
+            e3.setDireccion("San Gartolo");
+            
+            Transporte t3 = new Transporte();
+            t3.setMarca("Ford");
+            t3.setModelo("Revolutions");
+            t3.setAnio(2017);
+            t3.setCapacidadcarga(8000);
+            t3.setVolumen(600);
+            t3.setMatricula("WER204");
+            t3.setConductor(e3);
+            transporteServicio.crear(t3);       
+        }
+        
+         List<Vegetal> vegetales = vegetalServicio.obtenerVegetal();
+        if (vegetales == null || vegetales.isEmpty()) 
+        {
+            Vegetal v = new Vegetal();
+            v.setNombre("Papa");
+            v.setEspecie("Raiz");
+            v.setPeso(0.06);
+            v.setPrecio(0.20);
+            v.setCantidadcajapequenia(40);
+            v.setCantidadcajamediana(80);
+            v.setCantidadcajagrande(160);
+            vegetalServicio.crear(v);
+            
+            Vegetal v1 = new Vegetal();
+            v1.setNombre("Coliflor");
+            v1.setEspecie("Flor");
+            v1.setPeso(0.45);
+            v1.setPrecio(0.60);
+            v1.setCantidadcajapequenia(30);
+            v1.setCantidadcajamediana(60);
+            v1.setCantidadcajagrande(90);
+            vegetalServicio.crear(v1);
+            
+            Vegetal v2 = new Vegetal();
+            v2.setNombre("Lechuga");
+            v2.setEspecie("Hojas");
+            v2.setPeso(0.55);
+            v2.setPrecio(0.50);
+            v2.setCantidadcajapequenia(20);
+            v2.setCantidadcajamediana(40);
+            v2.setCantidadcajagrande(80);
+            vegetalServicio.crear(v2);
+            
+            Vegetal v3 = new Vegetal();
+            v3.setNombre("Lenteja");
+            v3.setEspecie("Semilla");
+            v3.setPeso(0.05);
+            v3.setPrecio(0.04);
+            v3.setCantidadcajapequenia(100);
+            v3.setCantidadcajamediana(200);
+            v3.setCantidadcajagrande(400);
+            vegetalServicio.crear(v3); 
+            
+            Vegetal v4 = new Vegetal();
+            v4.setNombre("Rabano");
+            v4.setEspecie("Raiz");
+            v4.setPeso(0.35);
+            v4.setPrecio(0.44);
+            v4.setCantidadcajapequenia(30);
+            v4.setCantidadcajamediana(60);
+            v4.setCantidadcajagrande(80);
+            vegetalServicio.crear(v4); 
+        }
         
         
+         List<Lote> lotes = loteServicio.obtenerLotes();
+        if (lotes == null || lotes.isEmpty()) 
+        {
+            
+            Lote l = new Lote();
+            l.setNombre("Lote1");
+            l.setArea(2000);
+            loteServicio.crear(l);
+            
+            Lote l1 = new Lote();
+            l1.setNombre("Lote2");
+            l1.setArea(3000);
+            loteServicio.crear(l1);
+            
+            Lote l2 = new Lote();
+            l2.setNombre("Lote3");
+            l2.setArea(20500);
+            loteServicio.crear(l2);
+            
+            Lote l3 = new Lote();
+            l3.setNombre("Lote4");
+            l3.setArea(3400);
+            loteServicio.crear(l3);
+            
+            
     }
+}
 }

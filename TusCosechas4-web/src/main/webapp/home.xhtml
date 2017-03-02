@@ -12,8 +12,7 @@
             <p:growl autoUpdate="true" />
             <p:panel header="Home" style="width: 100% ; margin: 0 auto; height: 400px;">
                 <h:outputText rendered="#{not empty credencialesBean.ususarioSesion}" value="Bienvenid@ #{credencialesBean.ususarioSesion eq null ? '': credencialesBean.ususarioSesion.username}"/>
-    <!--            <h:outputText rendered="#{not empty credencialesBean.clienteSesion}" value="#{credencialesBean.clienteSesion eq null ? '': credencialesBean.clienteSesion.nombres}"/>
-                <h:outputText rendered="#{not empty credencialesBean.empleadoSesion}" value="#{credencialesBean.empleadoSesion eq null ? '': credencialesBean.empleadoSesion.nombres}"/>-->
+
             </p:panel>
         </h:form>
     </ui:define>

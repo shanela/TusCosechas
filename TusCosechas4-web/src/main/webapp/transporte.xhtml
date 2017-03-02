@@ -28,7 +28,7 @@
             </center>
             <br />
             <p:panel header="Agregar/Modificar transporte" rendered="#{not empty transporteBean.transporte}">
-                <p:panelGrid columns="3">
+                <h:panelGrid columns="3">
                     <p:outputLabel for="marca" value="Marca: " />
                     <p:inputText id="marca" value="#{transporteBean.transporte.marca}" maxlength="75" required="true" requiredMessage="La marca del transporte es requerida." />
                     <p:message for="marca" />
@@ -52,7 +52,7 @@
                     <p:outputLabel for="matricula" value="Matricula: " />
                     <p:inputText id="matricula" value="#{transporteBean.transporte.matricula}" maxlength="50" required="true" requiredMessage="La matricula del transporte es requerida." />
                     <p:message for="matricula" />
-                </p:panelGrid>
+                </h:panelGrid>
                 <br />
                 <p:commandButton value="Guardar" actionListener="#{transporteBean.guardar()}" update="@form" />
                 <p:commandButton value="Cancelar" actionListener="#{transporteBean.cancelar()}" update="@form" immediate="true" />
