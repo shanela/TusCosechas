@@ -77,6 +77,7 @@ public class PedidoServicio implements Serializable {
     public List<Pedido> obtenerEstados(Pedido p) {
         return pedidoDao.createQuery().field("estado").containsIgnoreCase(p.getEstado()).asList();
     }
+  
 
     public boolean guardarPedido(Pedido p, Map<DetallePedido, Bodega> asignacionPedido) {
         try {

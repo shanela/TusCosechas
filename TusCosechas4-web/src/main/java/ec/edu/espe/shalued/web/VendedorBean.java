@@ -28,29 +28,26 @@ import org.apache.commons.beanutils.BeanUtils;
  */
 @Named
 @ViewScoped
-public class VendedorBean extends BaseBean implements Serializable 
-{
+public class VendedorBean extends BaseBean implements Serializable {
+
     private static final Logger LOG = Logger.getLogger(PedidoBean.class.getName());
-    
-     @Inject
+
+    @Inject
     private PedidoServicio pedidoServicio;
-      @Inject
+    @Inject
     private credencialesBean credencialesBean;
-      
-      private List<Pedido> pedidos;
-      private Pedido pedido;
-      private Pedido pedidoSeleccionado;
-      private String estadodep;
-     
-      
-      @PostConstruct
-    public void postContructor() 
-    {
-         this.pedidos= pedidoServicio.obtenerPedidosPorCliente(credencialesBean.getClienteSesion());
+
+    private List<Pedido> pedidos;
+    private Pedido pedido;
+    private Pedido pedidoSeleccionado;
+    private String estadodep;
+
+    @PostConstruct
+    public void postContructor() {
+        this.pedidos = pedidoServicio.obtenerPedidosPorCliente(credencialesBean.getClienteSesion());
     }
 
-       
-     public void modificar() {
+    public void modificar() {
         super.starModify();
         this.pedido = new Pedido();
         pedido.setEstado(estadodep);
@@ -62,8 +59,8 @@ public class VendedorBean extends BaseBean implements Serializable
         }
         this.pedidos = this.pedidoServicio.obtenerPedidosEnEspera();
     }
-    
-     public void cancelar() {
+
+    public void cancelar() {
         super.reset();
         this.pedido = null;
     }
@@ -83,12 +80,7 @@ public class VendedorBean extends BaseBean implements Serializable
     public void setEstadodep(String estadodep) {
         this.estadodep = estadodep;
     }
-    
-    
-    
-    
-    
-    
+
     public List<Pedido> getPedidos() {
         return pedidos;
     }
@@ -105,7 +97,7 @@ public class VendedorBean extends BaseBean implements Serializable
         this.pedido = pedido;
     }
 
-     //Mensajes
+    //Mensajes
     public void info(String mensaje) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, mensaje, ""));
     }
@@ -122,8 +114,4 @@ public class VendedorBean extends BaseBean implements Serializable
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", mensaje));
     }
 
-    
 }
-
-     
-

@@ -35,23 +35,21 @@ public class StartUpBean {
     EmpleadoServicio empleadoServicio;
     @Inject
     ClienteServicio clienteServicio;
-    
+
     @Inject
     UbicacionServicio ubicacionServicio;
-    
+
     @Inject
     TransporteServicio transporteServicio;
-    
-     @Inject
+
+    @Inject
     VegetalServicio vegetalServicio;
-     
+
     @Inject
     LoteServicio loteServicio;
 
-
     @PostConstruct
-    public void init() 
-    {
+    public void init() {
         List<Usuario> list = usuarioServicio.obtenerTodos();
         if (list == null || list.isEmpty()) {
             System.out.println("Lista vacia se van a crear los usuarios por defecto");
@@ -83,7 +81,7 @@ public class StartUpBean {
             Usuario vendedorusuario = new Usuario();
             vendedorusuario.setEstado("ACT");
             vendedorusuario.setPassword("1234");
-            vendedorusuario.setTipo("GER");
+            vendedorusuario.setTipo("VEN");
             vendedorusuario.setUsername("vendedor");
 
             usuarioServicio.crear(gerenteusuario);
@@ -148,70 +146,66 @@ public class StartUpBean {
             empleadoServicio.crear(e);
 
         }
-                
+
         List<Provincia> provincias = ubicacionServicio.obtenerTodasProvincias();
-        if (provincias == null || provincias.isEmpty()) 
-        {
-            Provincia p = new Provincia();          
-            p.setNombre("Bolivar");      
+        if (provincias == null || provincias.isEmpty()) {
+            Provincia p = new Provincia();
+            p.setNombre("Bolivar");
             ubicacionServicio.crearProvincia(p);
-            
+
             Provincia p1 = new Provincia();
-            p1.setNombre("Pichincha");      
+            p1.setNombre("Pichincha");
             ubicacionServicio.crearProvincia(p1);
-            
+
             Provincia p2 = new Provincia();
-            p2.setNombre("Azuay");      
+            p2.setNombre("Azuay");
             ubicacionServicio.crearProvincia(p2);
-            
+
             Provincia p3 = new Provincia();
-            p3.setNombre("Chimborazo");      
+            p3.setNombre("Chimborazo");
             ubicacionServicio.crearProvincia(p3);
-            
+
             Provincia p4 = new Provincia();
-            p4.setNombre("Guayas");      
-            ubicacionServicio.crearProvincia(p4);         
-            
-            
+            p4.setNombre("Guayas");
+            ubicacionServicio.crearProvincia(p4);
+
         }
-        
-              List<Canton> cantones = ubicacionServicio.obtenerTodasCantones();
-        if (cantones == null || cantones.isEmpty()) 
-        {
+
+        List<Canton> cantones = ubicacionServicio.obtenerTodasCantones();
+        if (cantones == null || cantones.isEmpty()) {
             Canton c = new Canton();
-            
-            c.setNombre("Guaranda");      
-            ubicacionServicio.crearCanton(c);          
+
+            c.setNombre("Guaranda");
+            ubicacionServicio.crearCanton(c);
             Canton c1 = new Canton();
-            c1.setNombre("Chillanes");      
+            c1.setNombre("Chillanes");
             ubicacionServicio.crearCanton(c1);
-            
+
             Canton c2 = new Canton();
-            c2.setNombre("Cayambe");      
-            ubicacionServicio.crearCanton(c2);            
+            c2.setNombre("Cayambe");
+            ubicacionServicio.crearCanton(c2);
             Canton c3 = new Canton();
-            c3.setNombre("Mejia");      
+            c3.setNombre("Mejia");
             ubicacionServicio.crearCanton(c3);
-            
+
             Canton c4 = new Canton();
-            c4.setNombre("Riobamba");      
+            c4.setNombre("Riobamba");
             ubicacionServicio.crearCanton(c4);
             Canton c5 = new Canton();
-            c5.setNombre("Guano");      
+            c5.setNombre("Guano");
             ubicacionServicio.crearCanton(c5);
-           
+
         }
-       
-         List<Transporte> transportes = transporteServicio.obtenerTransportes();
-        if (transportes == null || transportes.isEmpty()) 
-        {
+
+        List<Transporte> transportes = transporteServicio.obtenerTransportes();
+        if (transportes == null || transportes.isEmpty()) {
             Usuario conductorusuario = new Usuario();
             conductorusuario.setEstado("ACT");
             conductorusuario.setPassword("1234");
             conductorusuario.setTipo("CON");
             conductorusuario.setUsername("conductor");
             usuarioServicio.crear(conductorusuario);
-                        
+
             Empleado e = new Empleado();
             e.setApellidos("Salguero");
             e.setNombres("Edagar");
@@ -221,7 +215,7 @@ public class StartUpBean {
             e.setTelefono("0987654321");
             e.setDireccion("Sangolqui");
             empleadoServicio.crear(e);
-            
+
             Transporte t = new Transporte();
             t.setMarca("Kia");
             t.setModelo("Sportach");
@@ -231,14 +225,14 @@ public class StartUpBean {
             t.setMatricula("ASD234");
             t.setConductor(e);
             transporteServicio.crear(t);
-            
+
             Usuario conductorusuario1 = new Usuario();
             conductorusuario.setEstado("ACT");
             conductorusuario.setPassword("1234");
             conductorusuario.setTipo("CON");
             conductorusuario.setUsername("conductor1");
             usuarioServicio.crear(conductorusuario1);
-            
+
             Empleado e1 = new Empleado();
             e1.setApellidos("Gavilanez");
             e1.setNombres("Marion");
@@ -247,7 +241,7 @@ public class StartUpBean {
             e1.setRol("CON");
             e1.setTelefono("0966644324");
             e1.setDireccion("San Gartolo");
-            
+
             Transporte t1 = new Transporte();
             t1.setMarca("Ford");
             t1.setModelo("Revolutions");
@@ -257,15 +251,14 @@ public class StartUpBean {
             t1.setMatricula("WER204");
             t1.setConductor(e1);
             transporteServicio.crear(t1);
-            
-             Usuario conductorusuario2 = new Usuario();
+
+            Usuario conductorusuario2 = new Usuario();
             conductorusuario.setEstado("ACT");
             conductorusuario.setPassword("1234");
             conductorusuario.setTipo("CON");
             conductorusuario.setUsername("conductor2");
             usuarioServicio.crear(conductorusuario2);
-            
-            
+
             Empleado e2 = new Empleado();
             e2.setApellidos("Gavilanez");
             e2.setNombres("Marion");
@@ -274,7 +267,7 @@ public class StartUpBean {
             e2.setRol("CON");
             e2.setTelefono("0966644324");
             e2.setDireccion("San Gartolo");
-            
+
             Transporte t2 = new Transporte();
             t2.setMarca("Ford");
             t2.setModelo("Revolutions");
@@ -284,16 +277,15 @@ public class StartUpBean {
             t2.setMatricula("WER204");
             t2.setConductor(e2);
             transporteServicio.crear(t2);
-            
-             Usuario conductorusuario3 = new Usuario();
+
+            Usuario conductorusuario3 = new Usuario();
             conductorusuario.setEstado("ACT");
             conductorusuario.setPassword("1234");
             conductorusuario.setTipo("CON");
             conductorusuario.setUsername("conductor3");
             usuarioServicio.crear(conductorusuario3);
-            
-            
-             Empleado e3 = new Empleado();
+
+            Empleado e3 = new Empleado();
             e3.setApellidos("Gavilanez");
             e3.setNombres("Marion");
             e3.setUsuario(conductorusuario3);
@@ -301,7 +293,7 @@ public class StartUpBean {
             e3.setRol("CON");
             e3.setTelefono("0966644324");
             e3.setDireccion("San Gartolo");
-            
+
             Transporte t3 = new Transporte();
             t3.setMarca("Ford");
             t3.setModelo("Revolutions");
@@ -310,12 +302,11 @@ public class StartUpBean {
             t3.setVolumen(600);
             t3.setMatricula("WER204");
             t3.setConductor(e3);
-            transporteServicio.crear(t3);       
+            transporteServicio.crear(t3);
         }
-        
-         List<Vegetal> vegetales = vegetalServicio.obtenerVegetal();
-        if (vegetales == null || vegetales.isEmpty()) 
-        {
+
+        List<Vegetal> vegetales = vegetalServicio.obtenerVegetal();
+        if (vegetales == null || vegetales.isEmpty()) {
             Vegetal v = new Vegetal();
             v.setNombre("Papa");
             v.setEspecie("Raiz");
@@ -325,7 +316,7 @@ public class StartUpBean {
             v.setCantidadcajamediana(80);
             v.setCantidadcajagrande(160);
             vegetalServicio.crear(v);
-            
+
             Vegetal v1 = new Vegetal();
             v1.setNombre("Coliflor");
             v1.setEspecie("Flor");
@@ -335,7 +326,7 @@ public class StartUpBean {
             v1.setCantidadcajamediana(60);
             v1.setCantidadcajagrande(90);
             vegetalServicio.crear(v1);
-            
+
             Vegetal v2 = new Vegetal();
             v2.setNombre("Lechuga");
             v2.setEspecie("Hojas");
@@ -345,7 +336,7 @@ public class StartUpBean {
             v2.setCantidadcajamediana(40);
             v2.setCantidadcajagrande(80);
             vegetalServicio.crear(v2);
-            
+
             Vegetal v3 = new Vegetal();
             v3.setNombre("Lenteja");
             v3.setEspecie("Semilla");
@@ -354,8 +345,8 @@ public class StartUpBean {
             v3.setCantidadcajapequenia(100);
             v3.setCantidadcajamediana(200);
             v3.setCantidadcajagrande(400);
-            vegetalServicio.crear(v3); 
-            
+            vegetalServicio.crear(v3);
+
             Vegetal v4 = new Vegetal();
             v4.setNombre("Rabano");
             v4.setEspecie("Raiz");
@@ -364,35 +355,32 @@ public class StartUpBean {
             v4.setCantidadcajapequenia(30);
             v4.setCantidadcajamediana(60);
             v4.setCantidadcajagrande(80);
-            vegetalServicio.crear(v4); 
+            vegetalServicio.crear(v4);
         }
-        
-        
-         List<Lote> lotes = loteServicio.obtenerLotes();
-        if (lotes == null || lotes.isEmpty()) 
-        {
-            
+
+        List<Lote> lotes = loteServicio.obtenerLotes();
+        if (lotes == null || lotes.isEmpty()) {
+
             Lote l = new Lote();
             l.setNombre("Lote1");
             l.setArea(2000);
             loteServicio.crear(l);
-            
+
             Lote l1 = new Lote();
             l1.setNombre("Lote2");
             l1.setArea(3000);
             loteServicio.crear(l1);
-            
+
             Lote l2 = new Lote();
             l2.setNombre("Lote3");
             l2.setArea(20500);
             loteServicio.crear(l2);
-            
+
             Lote l3 = new Lote();
             l3.setNombre("Lote4");
             l3.setArea(3400);
             loteServicio.crear(l3);
-            
-            
+
+        }
     }
-}
 }
