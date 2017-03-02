@@ -26,6 +26,9 @@
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
+                         <p:column headerText="Vegetal Pedido">
+                             <h:outputText value="#{pedidoBean.vegetal.nombre} "/>
+                        </p:column>
                         <p:column headerText="Estado Pedido">
                             <h:outputText value="#{pedidoBean.cambioEtiquetaEstadoPedido2(misPedido.estado)} "/>
                         </p:column>

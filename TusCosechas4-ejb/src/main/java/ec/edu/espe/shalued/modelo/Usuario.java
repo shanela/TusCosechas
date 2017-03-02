@@ -24,6 +24,15 @@ public class Usuario extends BaseEntity{
     private String password;
     private String estado;
     private String tipo;
+    private Integer codigoUsuario;
+
+    public void setCodigoUsuario(Integer codigoUsuario) {
+        this.codigoUsuario = codigoUsuario;
+    }
+
+    public Integer getCodigoUsuario() {
+        return codigoUsuario;
+    }
 
     public String getUsername() {
         return username;

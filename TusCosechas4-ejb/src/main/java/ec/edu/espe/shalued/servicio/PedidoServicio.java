@@ -12,6 +12,7 @@ import ec.edu.espe.shalued.modelo.Dao.BodegaDao;
 import ec.edu.espe.shalued.modelo.Dao.DetallePedidoDao;
 import ec.edu.espe.shalued.modelo.Dao.PedidoDao;
 import ec.edu.espe.shalued.modelo.DetallePedido;
+import ec.edu.espe.shalued.modelo.Empleado;
 import ec.edu.espe.shalued.modelo.Pedido;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,28 +53,41 @@ public class PedidoServicio implements Serializable {
         String estado = "ESPER";
         return pedidoDao.createQuery().filter("estado =", estado).asList();
     }
+    
+    public List<Pedido> obtenerPedidosEnCamino() {
+        String estado = "ENCAMI";
+        return pedidoDao.createQuery().filter("estado =", estado).asList();
+    }
 
     public List<Pedido> obtenertodoslosPedidos() {
         return this.mp.context().find(Pedido.class).asList();
     }
 
-    public List<Pedido> obtenerPedidosPorCliente(Cliente c) {
-        return pedidoDao.createQuery().field("cedula").containsIgnoreCase(c.getCedula()).asList();
+                            public List<Pedido> obtenerPedidosPorCliente(Cliente c) {
+                                return pedidoDao.createQuery().field("codigoCliente").equalIgnoreCase(c.getCodigoCliente()).asList();
+                            }
 
+                            public List<Pedido> obtenerPedidosPorVendedor(Empleado e) {
+                                return pedidoDao.createQuery().field("rol").containsIgnoreCase(e.getRol()).asList();
+                            }
+
+    
+    public List<Pedido> obtenerEstados(Pedido p) {
+        return pedidoDao.createQuery().field("estado").containsIgnoreCase(p.getEstado()).asList();
     }
 
-     public boolean guardarPedido(Pedido p, Map<DetallePedido, Bodega> asignacionPedido) {
+    public boolean guardarPedido(Pedido p, Map<DetallePedido, Bodega> asignacionPedido) {
         try {
             p.setEstado("ESPER");
-            if (p.getDetalle()!= null && !p.getDetalle().isEmpty()) {
+            if (p.getDetalle() != null && !p.getDetalle().isEmpty()) {
                 List<DetallePedido> list = new ArrayList<>(p.getDetalle());
                 p.setDetalle(null);
                 pedidoDao.save(p);
-           
+
                 for (DetallePedido d : list) {
                     actualizarDisponibilidad((Bodega) asignacionPedido.get(d), d.getCantidad());
-                    d.setCodigoDetallePedido( p.getCodigoPedido());
-                   
+                    d.setCodigoDetallePedido(p.getCodigoPedido());
+
                     detallePedidoDao.save(d);
                 }
                 return true;
@@ -83,36 +97,34 @@ public class PedidoServicio implements Serializable {
         }
         return false;
     }
-    
+
     public boolean actualizarDisponibilidad(Bodega b, Integer cantReducir) {
         try {
-             LOG.log(Level.FINE, "Va a modificar la bodega:", b);
-             Query<Bodega> query = bodegaDao.createQuery().filter("codigoBodega =", b.getCodigoBodega());
-              b.setCantidad(b.getCantidad()- cantReducir);
-             UpdateOperations<Bodega> opera= bodegaDao.createUpdateOperations().set("cantidad", b.getCantidad());
-            
-             bodegaDao.update(query, opera); 
-           
-           return true;
+            LOG.log(Level.FINE, "Va a modificar la bodega:", b);
+            Query<Bodega> query = bodegaDao.createQuery().filter("codigoBodega =", b.getCodigoBodega());
+            b.setCantidad(b.getCantidad() - cantReducir);
+            UpdateOperations<Bodega> opera = bodegaDao.createUpdateOperations().set("cantidad", b.getCantidad());
+
+            bodegaDao.update(query, opera);
+
+            return true;
 
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "No se pudo actualizar la disponibilidad", e);
         }
         return false;
     }
-     
-    
+
     public void modificar(Pedido p) {
         LOG.log(Level.FINE, "Va a modificar el pedido:", p);
-        
-         Query<Pedido> query = pedidoDao.createQuery().filter("codigoPedido =", p.getCodigoPedido());
-             UpdateOperations<Pedido> opera= pedidoDao.createUpdateOperations().set("fecha", p.getFecha())
-                                                                               .set("estado", p.getEstado());
-                                                                               
-             pedidoDao.update(query, opera); 
-               
-         LOG.log(Level.INFO, "Se ha modificado el pedido: ", p);
+
+        Query<Pedido> query = pedidoDao.createQuery().filter("codigoPedido =", p.getCodigoPedido());
+        UpdateOperations<Pedido> opera = pedidoDao.createUpdateOperations().set("fecha", p.getFecha())
+                .set("estado", p.getEstado());
+
+        pedidoDao.update(query, opera);
+
+        LOG.log(Level.INFO, "Se ha modificado el pedido: ", p);
     }
-     
-     
+
 }

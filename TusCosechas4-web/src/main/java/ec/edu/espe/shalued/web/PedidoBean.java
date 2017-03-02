@@ -62,7 +62,9 @@ public class PedidoBean extends BaseBean implements Serializable {
     private List<Canton> cantones;
     private List<Pedido> pedidos;
     private List<Bodega> bodegas;
-
+    private List<Pedido> estadosPedido;
+    private List<Pedido> pedidosEmpleado;
+    
     //Objetos
     private Map<DetallePedido, Bodega> asignacionBodegaDetalle;
     private Vegetal vegetal;
@@ -74,6 +76,7 @@ public class PedidoBean extends BaseBean implements Serializable {
     private Integer cant = 1;
     private Long idTemp = 1L;
     private Pedido pedidoSeleccionado;
+    private Pedido pedidoEstadoSeleccionado;
     private PedidoDao pedidoDao;
 
     public Vegetal getVegetal() {
@@ -93,6 +96,8 @@ public class PedidoBean extends BaseBean implements Serializable {
         this.pedido = new Pedido();
         this.asignacionBodegaDetalle = new HashMap<>();
         this.pedidos= pedidoServicio.obtenerPedidosPorCliente(credencialesBean.getClienteSesion());
+        this.pedidosEmpleado=pedidoServicio.obtenerPedidosPorVendedor(credencialesBean.getEmpleadoSesion());
+//        this.pedidos= pedidoServicio.obtenerPedidosPorCliente(credencialesBean.getClienteSesion());
     }
 
     public void consultarBodegaDisponibilidad() {
@@ -115,7 +120,17 @@ public class PedidoBean extends BaseBean implements Serializable {
             cantones = null;
         }
     }
+                            public void cargarEstadosVendedor() 
+                            {
+                                this.pedidos= pedidoServicio.obtenerEstados(pedidoEstadoSeleccionado);
+                            }
 
+                            public void cargarEstadosConductor() 
+                            {
+
+                                this.pedidos= pedidoServicio.obtenerEstados(pedidoEstadoSeleccionado);
+                            }
+      
     public void agregarNuevoItemVegetal() {
         Vegetal aux = bodegaSelected.getVegetal();
         if (aux != null) {
@@ -137,7 +152,7 @@ public class PedidoBean extends BaseBean implements Serializable {
 
     }
 
-    public void crearPedido() {
+    public void crearNuevoPedido() {
 //        pedido.setProCodigo(provinciaSelectedId);
 //        pedido.setCanCodigo(cantonSelectedId);
         Integer id =obtenerMaximoId()+1;
@@ -185,10 +200,7 @@ public class PedidoBean extends BaseBean implements Serializable {
         return "";
     }
     
-  
-    
-
-  public void modificar() {
+   public void modificar() {
         super.starModify();
         this.pedido = new Pedido();
         try {
@@ -199,7 +211,8 @@ public class PedidoBean extends BaseBean implements Serializable {
         }
         this.pedidos = this.pedidoServicio.obtenerPedidosEnEspera();
     }
-    
+   
+  
     public void guardar() {
         if (super.isModify()) {
             this.pedidoServicio.modificar(pedido);
@@ -297,6 +310,30 @@ public class PedidoBean extends BaseBean implements Serializable {
 
     public void setPedidoSeleccionado(Pedido pedidoSeleccionado) {
         this.pedidoSeleccionado = pedidoSeleccionado;
+    }
+
+    public Pedido getPedidoEstadoSeleccionado() {
+        return pedidoEstadoSeleccionado;
+    }
+
+    public void setPedidoEstadoSeleccionado(Pedido pedidoEstadoSeleccionado) {
+        this.pedidoEstadoSeleccionado = pedidoEstadoSeleccionado;
+    }
+
+    public List<Pedido> getEstadosPedido() {
+        return estadosPedido;
+    }
+
+    public void setEstadosPedido(List<Pedido> estadosPedido) {
+        this.estadosPedido = estadosPedido;
+    }
+
+    public List<Pedido> getPedidosEmpleado() {
+        return pedidosEmpleado;
+    }
+
+    public void setPedidosEmpleado(List<Pedido> pedidosEmpleado) {
+        this.pedidosEmpleado = pedidosEmpleado;
     }
     
     

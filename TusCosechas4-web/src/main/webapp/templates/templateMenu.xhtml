@@ -19,46 +19,46 @@
                         <div class="container">
                             <a href="#" class="brand"><img src="images/logo.png" width="120" height="40" alt="Logo" /></a>                         
                         </div>
+                        <h:form id="menuForm" >
+                            <!--MENU CLIENTE realiza pedidos-->
+                            <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'CLI'}">
+                                <p:menuitem value="Nuevo Pedido" outcome=""/>
+                                <p:menuitem value="Ver Pedidos Realizados" outcome=""/>                    
+                                <p:menuitem value="Ver Facturas" outcome="/faces/views/facturasCli"/>
+                            </p:menubar>
 
-                        <!--MENU CLIENTE realiza pedidos-->
-                        <p:menubar>
-                            <p:menuitem value="Nuevo Pedido" outcome=""/>
-                            <p:menuitem value="Ver Pedidos Realizados" outcome=""/>                    
-                            <p:menuitem value="Ver Facturas" outcome="/faces/views/facturasCli"/>
-                        </p:menubar>
+
+                            <!--MENU GERENTE crud de todo-->
+                            <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'GER'}">
+                                <p:menuitem value="Empleados" outcome=""/>
+                                <p:menuitem value="Lotes" outcome=""/>                    
+                                <p:menuitem value="Transportes" outcome="/faces/views/facturasCli"/>
+                                <p:menuitem value="Vegetales" outcome=""/>    
+                            </p:menubar>
+
+                            <!--MENU CONDUCTOR Cambia el estado del pedido (en camino u entregado) -->
+                            <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'CON'}">
+                                <p:menuitem value="Pedidos" outcome=""/>                              
+                            </p:menubar>
+
+                            <!--MENU BODEGUERO: agrega vegetales en bodega -->                                              
+                            <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'BOD'}">
+                                <p:menuitem value="Administracion de Bodegas" outcome=""/>                              
+                            </p:menubar>
 
 
-                        <!--MENU GERENTE crud de todo-->
-                        <p:menubar>
-                            <p:menuitem value="Empleados" outcome=""/>
-                            <p:menuitem value="Lotes" outcome=""/>                    
-                            <p:menuitem value="Transportes" outcome="/faces/views/facturasCli"/>
-                            <p:menuitem value="Vegetales" outcome=""/>    
-                        </p:menubar>
-                        
-                        <!--MENU CONDUCTOR Cambia el estado del pedido (en camino u entregado) -->
-                        <p:menubar>
-                            <p:menuitem value="Pedidos" outcome=""/>                              
-                        </p:menubar>
-                        
-                        <!--MENU BODEGUERO: agrega vegetales en bodega -->                                              
-                        <p:menubar>
-                            <p:menuitem value="Administracion de Bodegas" outcome=""/>                              
-                        </p:menubar>
-                        
+                            <!--MENU VENDEDOR -->
+                            <p:menubar rendered="#{credencialesBean.tipoUsuario eq 'VEN'}">
+                                <p:menuitem value="Pedidos por Aprobar" outcome=""/>                              
+                            </p:menubar>
+                        </h:form>
+                        <aside>
+                            <h:form id="logoutForm" >
+                                <h:commandLink value="Logout" action="#{credencialesBean.logout}" />
+                            </h:form>
+                        </aside>
 
-                        <!--MENU VENDEDOR -->
-                          <p:menubar>
-                            <p:menuitem value="Pedidos por Aprobar" outcome=""/>                              
-                        </p:menubar>
-
-                            <aside>
-                                <ui:insert name="nav-user">
-                                    <ui:include src="/WEB-INF/includes/layout/nav-user.xhtml" />
-                                </ui:insert>
-                            </aside>
-
-                        </nav>
+                
                     </div>
                 </div>
             </header>
