@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.FindOptions;
+import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 @Stateless
@@ -61,17 +62,24 @@ public class TransporteServicio implements Serializable {
     
     public void modificar(Transporte transporte) {
         LOG.log(Level.FINE, "Va a modificar el transporte:", transporte);
-        Transporte tra = this.findById(transporte.getIdString());
-        UpdateOperations ops1 = mp.context().createUpdateOperations(Transporte.class)
-                .set("marca", tra.getMarca())
-                .set("modelo", tra.getModelo())
-                .set("anio", tra.getAnio())
-                .set("capacidadcarga", tra.getCapacidadcarga())
-                .set("volumen", tra.getVolumen())
-                .set("matricula", tra.getMatricula())
-                .set("conductor", tra.getConductor());
-        this.mp.context().update(tra, ops1);
+        try
+         {
+        Query<Transporte> query = transporteDao.createQuery().filter("codigoVegetal =", transporte.getCodigoTransporte());     
+         UpdateOperations<Transporte> opera = transporteDao.createUpdateOperations().set("marca", transporte.getMarca())
+                .set("modelo", transporte.getModelo())
+                .set("anio", transporte.getAnio())
+                .set("capacidadcarga", transporte.getCapacidadcarga())
+                .set("volumen", transporte.getVolumen())
+                .set("matricula", transporte.getMatricula())
+                .set("conductor", transporte.getConductor());
+         transporteDao.update(query, opera);
         LOG.log(Level.INFO, "Se ha modificado el transporte: ", transporte);
+    }
+        
+        catch(Exception e) 
+         {
+            LOG.log(Level.SEVERE, "No se puedo modificar el transporte", e);       
+         }
     }
     
     public void eliminar(Transporte transporte) {

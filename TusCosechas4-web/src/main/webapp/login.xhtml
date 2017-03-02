@@ -17,9 +17,10 @@
               <p:password id="pwd" value="#{logInBean.password}" maxlength="20" required="true" requiredMessage="La Clave es requerida."/>                                  
            </p:panelGrid>
          
-          <p:panelGrid columns="1" style="width: 100%;" styleClass="ui-panelgrid-blank" >
+          <p:panelGrid columns="3" style="width: 100%;" styleClass="ui-panelgrid-blank" >
                    <p:messages for="usuario, pwd"  severity="error"/>
-                   <p:commandButton value="Aceptar" ajax="false" action="#{logInBean.login()}" update="@form" style="margin:0px auto;"/>                                   
+                   <p:commandButton value="Aceptar" ajax="false" action="#{logInBean.login()}" update="@form" style="margin:0px auto;"/>  
+                   <p:commandButton value="Registrarse" ajax="false" actionListener="#{logInBean.registerCliente()}" update="@form" style="margin:0px auto;"/> 
           </p:panelGrid>         
      </p:panel>    
         <p:messages  globalOnly="true" showDetail="true" severity="info, error, warning"></p:messages>
